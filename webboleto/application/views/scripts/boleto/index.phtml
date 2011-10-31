@@ -1,0 +1,19 @@
+<?php
+if (!empty($this->errors)) {
+	$errors = $this->xml->addChild('errors');
+	$cont = 1;
+	foreach ($this->errors as $campo => $value) {
+		$error = $errors->addChild('erro_'.$cont++);
+		$error->addChild('campo',$campo);
+		$cont1 = 1;
+		foreach ($value as $erro=> $descricao) {
+			$error->addChild('error_'.$cont,$erro);
+			$error->addChild('descricao_'.$cont++, $descricao);
+		}
+	}
+} else {
+	$this->xml->addChild('errors', '0');
+	$this->xml->addChild('boleto', urlencode($this->render('boleto/'.$this->boleto_nome.'.phtml')));
+}
+	header('Content-type: text/xml; charset=iso-8859-1');
+	echo $this->xml->asXML();
