@@ -42,21 +42,21 @@ class BoletoController extends Zend_Controller_Action {
 					$vars = $boleto->getParams();
 					$boleto_nome = strtolower($boleto_nome);
 				} else {
-					$errors = array('Controladora' => 'Controladora Inválida');
+					$errors = array('Controladora Invalida');
 				}
 			}
 		} else {
-			$errors = array('Sem Parâmetros' => 'Parâmetros são obrigatórios');
+			$errors = array('Parametros sao obrigatorios');
 		}
 		// envia as variáveis para a camada de visualização
 		$this->view->vars = $vars;
 		$this->view->errors = $errors;
 		$this->view->boleto_nome = $boleto_nome;
-		$this->view->xml = new SimpleXMLElement('<?xml version=\'1.0\' encoding="ISO-8859-1"?><consulta></consulta>');
+		$this->view->xml = new SimpleXMLElement('<?xml version=\'1.0\' encoding="ISO-8859-1"?><geracao></geracao>');
 	}
 
 	public function consultaAction(){
-		$result = array('errors'=>1,'descricao' => 'Parâmetros inválidos');
+		$result = array('errors'=>1,'descricao' => 'Parametros invalidos');
 		if ($this->getRequest()->isGet()){
 			$params = $this->getRequest()->getQuery();
 			$boleto = new Application_Model_DbTable_Boleto();
@@ -87,7 +87,7 @@ class BoletoController extends Zend_Controller_Action {
 				$xml->addChild($key, $value);
 			} else {
 				if (!isset($parametros)) {
-					$parametros = $xml->addChild('parametros','');
+					$parametros = $xml->addChild('parametros');
 				}
 				$parametros->addChild('parametro_'.$cont++, $value);
 			}

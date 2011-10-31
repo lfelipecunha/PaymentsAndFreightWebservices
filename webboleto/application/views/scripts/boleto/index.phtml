@@ -3,12 +3,17 @@ if (!empty($this->errors)) {
 	$errors = $this->xml->addChild('errors');
 	$cont = 1;
 	foreach ($this->errors as $campo => $value) {
-		$error = $errors->addChild('erro_'.$cont++);
-		$error->addChild('campo',$campo);
-		$cont1 = 1;
-		foreach ($value as $erro=> $descricao) {
-			$error->addChild('error_'.$cont,$erro);
-			$error->addChild('descricao_'.$cont++, $descricao);
+		if (is_array($value)) {
+			$error = $errors->addChild('erro_'.$cont++);
+			$error->addChild('campo',$campo);
+			$cont1 = 1;
+			foreach ($value as $erro => $descricao) {
+				$error->addChild('tipo_'.$cont1,$erro);
+				$error->addChild('descricao_'.$cont1++, $descricao);
+			}
+		} else {
+			$errors->addChild('error',1);
+			$errors->addChild('descricao',$value);
 		}
 	}
 } else {
