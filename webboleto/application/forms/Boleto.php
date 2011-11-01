@@ -26,7 +26,8 @@ class Application_Form_Boleto extends Zend_Form {
 		$cnpj = new Zend_Form_Element('cnpj_cedente');
 		$cnpj
 			->setAllowEmpty(false)
-			->setRequired(true);
+			->setRequired(true)
+			->addFilter($urldecode);
 		$this->addElement($cnpj);
 
 		// nosso número
