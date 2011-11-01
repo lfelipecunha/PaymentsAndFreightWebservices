@@ -1,7 +1,7 @@
 <?php
 class Application_Model_DbTable_Logs extends Zend_Db_Table_Abstract
 {
-	protected $_name = 'webboletos_logs';
+	protected $_name = 'webboleto_logs';
 
 	protected $_primary = 'id';
 
