@@ -13,12 +13,12 @@ if (!empty($this->errors)) {
 			}
 		} else {
 			$errors->addChild('error',1);
-			$errors->addChild('descricao',$value);
+			$errors->addChild('descricao',utf8_encode($value));
 		}
 	}
 } else {
 	$this->xml->addChild('errors', '0');
-	$this->xml->addChild('boleto', urlencode($this->render('boleto/'.$this->boleto_nome.'.phtml')));
+	$this->xml->addChild('boleto', utf8_encode($this->render('boleto/'.$this->boleto_nome.'.phtml')));
 }
 	header('Content-type: text/xml; charset=iso-8859-1');
 	echo $this->xml->asXML();

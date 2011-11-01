@@ -42,11 +42,11 @@ class BoletoController extends Zend_Controller_Action {
 					$vars = $boleto->getParams();
 					$boleto_nome = strtolower($boleto_nome);
 				} else {
-					$errors = array('Controladora Invalida');
+					$errors = array('Controladora Inválida');
 				}
 			}
 		} else {
-			$errors = array('Parametros sao obrigatorios');
+			$errors = array('Parâmetros são obrigatórios');
 		}
 		// envia as variáveis para a camada de visualização
 		$this->view->vars = $vars;
@@ -56,7 +56,7 @@ class BoletoController extends Zend_Controller_Action {
 	}
 
 	public function consultaAction(){
-		$result = array('errors'=>1,'descricao' => 'Parametros invalidos');
+		$result = array('errors'=>1,'descricao' => 'Parâmetros inválidos');
 		if ($this->getRequest()->isGet()){
 			$params = $this->getRequest()->getQuery();
 			$boleto = new Application_Model_DbTable_Boleto();
@@ -83,6 +83,7 @@ class BoletoController extends Zend_Controller_Action {
 		$xml = new SimpleXMLElement('<?xml version=\'1.0\' encoding="ISO-8859-1"?><consulta></consulta>');
 		$cont = 1;
 		foreach ($result as $key => $value) {
+			$value = utf8_encode($value);
 			if (!is_numeric($key)) {
 				$xml->addChild($key, $value);
 			} else {
