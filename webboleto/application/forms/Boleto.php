@@ -16,7 +16,8 @@ class Application_Form_Boleto extends Zend_Form {
 		$nome_cedente = new Zend_Form_Element('nome_cedente');
 		$nome_cedente
 			->setRequired(true)
-			->setAllowEmpty(false);
+			->setAllowEmpty(false)
+			->addFilter(new Zend_Filter_UrlDecode());
 		$this->addElement($nome_cedente);
 
 		// cnpj cedente
@@ -61,14 +62,16 @@ class Application_Form_Boleto extends Zend_Form {
 		$cliente_endereco = new Zend_Form_Element('cliente_endereco');
 		$cliente_endereco
 			->setAllowEmpty(false)
-			->setRequired(true);
+			->setRequired(true)
+			->addFilter(new Zend_Filter_UrlDecode());
 		$this->addElement($cliente_endereco);
 
 		// nome do cliente
 		$cliente_nome = new Zend_Form_Element('cliente_nome');
 		$cliente_nome
 			->setAllowEmpty(false)
-			->setRequired(true);
+			->setRequired(true)
+			->addFilter(new Zend_Filter_UrlDecode());
 		$this->addElement($cliente_nome);
 
 		// estado do cliente
@@ -82,7 +85,8 @@ class Application_Form_Boleto extends Zend_Form {
 		$cliente_cidade = new Zend_Form_Element('cliente_cidade');
 		$cliente_cidade
 			->setAllowEmpty(false)
-			->setRequired(true);
+			->setRequired(true)
+			->addFilter(new Zend_Filter_UrlDecode());
 		$this->addElement($cliente_cidade);
 
 		// cep do cliente
