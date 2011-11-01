@@ -49,10 +49,10 @@ class BoletoController extends Zend_Controller_Action {
 			$errors = array('Parâmetros são obrigatórios');
 		}
 		// envia as variáveis para a camada de visualização
+		$this->getResponse()->setHeader('Content-Type', 'text/xml');
 		$this->view->vars = $vars;
 		$this->view->errors = $errors;
 		$this->view->boleto_nome = $boleto_nome;
-		$this->view->xml = new SimpleXMLElement('<?xml version=\'1.0\' encoding="ISO-8859-1"?><geracao></geracao>');
 	}
 
 	public function consultaAction(){
@@ -77,24 +77,9 @@ class BoletoController extends Zend_Controller_Action {
 				$result = array();
 				$result = $boleto->getBoletosDisponiveis();
 			}
-
 		}
 
-		$xml = new SimpleXMLElement('<?xml version=\'1.0\' encoding="ISO-8859-1"?><consulta></consulta>');
-		$cont = 1;
-		foreach ($result as $key => $value) {
-			$value = utf8_encode($value);
-			if (!is_numeric($key)) {
-				$xml->addChild($key, $value);
-			} else {
-				if (!isset($parametros)) {
-					$parametros = $xml->addChild('parametros');
-				}
-				$parametros->addChild('parametro_'.$cont++, $value);
-			}
-		}
-		$this->view->xml = $xml;
-
-
+		$this->view->result = $result;
+		$this->getResponse()->setHeader('Content-Type', 'text/xml');
 	}
 }

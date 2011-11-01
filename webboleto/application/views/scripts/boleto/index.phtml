@@ -1,24 +1,35 @@
-<?php
-if (!empty($this->errors)) {
-	$errors = $this->xml->addChild('errors');
-	$cont = 1;
-	foreach ($this->errors as $campo => $value) {
-		if (is_array($value)) {
-			$error = $errors->addChild('erro_'.$cont++);
-			$error->addChild('campo',$campo);
-			$cont1 = 1;
-			foreach ($value as $erro => $descricao) {
-				$error->addChild('tipo_'.$cont1,$erro);
-				$error->addChild('descricao_'.$cont1++, $descricao);
-			}
-		} else {
-			$errors->addChild('error',1);
-			$errors->addChild('descricao',utf8_encode($value));
-		}
-	}
-} else {
-	$this->xml->addChild('errors', '0');
-	$this->xml->addChild('boleto', utf8_encode($this->render('boleto/'.$this->boleto_nome.'.phtml')));
-}
-	header('Content-type: text/xml; charset=iso-8859-1');
-	echo $this->xml->asXML();
+<?php echo '<?xml version="1.0" encoding="iso-8859-1"?>' ?>
+<boleto>
+<?php if (!empty($this->errors)) : ?>
+	<errors>
+	<?php $cont = 1 ?>
+	<?php foreach ($this->errors as $campo => $value) : ?>
+		<?php if (is_array($value)) : ?>
+				<erro_<?php echo $cont ?>>
+					<campo><?php echo $campo ?></campo>
+				<?php $cont1 = 1 ?>
+				<?php foreach ($value as $erro => $descricao) : ?>
+					<tipo_<?php echo $cont1?>>
+						<?php echo $erro ?>
+					</tipo_<?php echo $cont1?>> 
+					<descricao_<?php echo $cont1?>>
+						<?php echo $descricao ?>
+					</descricao_<?php echo $cont1++?>>
+				<?php endforeach ?>
+				</erro_<?php echo $cont ?>>
+		<?php else :?>
+				<error>1</error>
+				<descricao><?php echo $value ?></descricao>
+		<?php endif ?>
+	<?php endforeach ?>
+	</errors>
+<?php else : ?>
+	<?php $boleto = $this->render('boleto/'.$this->boleto_nome.'.phtml'); ?>
+	<errors>0</errors>
+	<boleto>
+		<![CDATA[
+<?php echo $boleto ?>
+		]]>
+	</boleto>
+<?php endif ?>
+</boleto>
