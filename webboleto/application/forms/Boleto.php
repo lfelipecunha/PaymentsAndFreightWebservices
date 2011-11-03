@@ -73,7 +73,8 @@ class Application_Form_Boleto extends Zend_Form {
 		$cliente_nome = new Zend_Form_Element('cliente_nome');
 		$cliente_nome
 			->setAllowEmpty(false)
-			->setRequired(true);
+			->setRequired(true)
+			->addFilter($urldecode);
 		$this->addElement($cliente_nome);
 
 		// estado do cliente
