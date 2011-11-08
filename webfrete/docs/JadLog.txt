@@ -1,0 +1,30 @@
+Parâmetros para consulta de valores
+===================================
+
+vModalidade -> Modalidade do frete. Deve conter apenas números
+Password    -> Senha de acesso à área de Serviços on-line do site da JADLOG
+vSeguro     -> Tipo do Seguro 'N' normal 'A' apólice própria
+vVlDec      -> Valor da Nota fiscal Ex: 100,00
+vVlColeta   -> Valor da coleta negociado com a unidade JADLOG. Ex. 10,00
+vCepOrig    -> CEP de origem Ex.:02714020
+vCepDest    -> CEP de destino Ex.:02714020
+vPeso       -> Peso Real em quilos Ex.: 13,23
+vFrap       -> Frete a pagar no destino, 'S' = sim 'N' = não.
+vEntrega    -> Tipo de entrega 'R' retira unidade JADLOG, 'D' domicilio.
+vCnpj       -> CNPJ do contratante
+
+ _________________________
+|        |                |
+| Código | Modalidade     |
+|--------|----------------|
+| 0      | EXPRESSO       |
+| 3      | .PACKAGE       |
+| 4      | RODOVIÁRIO     |
+| 5      | ECONÔMICO      |
+| 6      | DOC            |
+| 7      | CORPORATE      |
+| 9      | .COM           |
+| 10     | INTERNACIONAL  |
+| 12     | CARGO          |
+| 14     | EMERGÊNCIAL    |
+|________|________________|
