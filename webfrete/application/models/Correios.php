@@ -10,17 +10,20 @@ class Application_Model_Correios implements Application_Model_Frete
 {
 	/**
 	 * Parâmetro com o valor padrão para o diametro de produto
+	 * @var int
 	 */
 	protected $_diametro = 5;
 
 	/**
 	 * Variável que armazena todas as caixas de produtos de uma solicitação
+	 * @var array
 	 */
 	protected $_caixas = array();
 
 	/**
-	 * Variável que tem padrao de valores a serem enviados ao webservice dos 
+	 * Variável que tem padrão de valores a serem enviados ao webservice dos 
 	 * Correios
+	 * @var array
 	 */
 	protected $_params = array(
 		'nCdEmpresa'          => 'correios_login',
@@ -57,15 +60,26 @@ class Application_Model_Correios implements Application_Model_Frete
 	 *                      vide a documentação
 	 */
 	protected function _parseParams($params) {
+		// seta o diametro padrão
 		$params['diametro'] = $this->_diametro;
+		// instância do Formulário dos Correios
 		$form = new Application_Form_Correios();
-		if ($form->isValid($params)) {
+		// verifica se os parametros passados são válidos
+		if ($form->isValid($params)) { // se são válidos
+			// pega os valores filtrados do formulário
 			$form_values = $form->getValues();
+			// monta os parametros
 			$params = array_merge($form_values,$params);
+
+			// laço para pegar os valores padrões de parametros
 			foreach ($this->_params as &$value) {
+				// para cada valor do atributo de parametros existe parametro 
+				// uma chave no array de parametros passado, este valor é 
+				// assumido pelo elemento do array
 				$value = $params[$value];
 			}
-		} else {
+		} else { // caso valores inválidos
+			// lança uma execessão
 			throw new Exception('',101);
 		}
 	}
@@ -80,36 +94,67 @@ class Application_Model_Correios implements Application_Model_Frete
 	 * @param array $produtos Produtos a serem inseridos
 	 */
 	protected function _setProdutos($produtos) {
+		// instâcia do objeto de Empacotamento
 		$empacotador = F1S_Basket_Freight_Packer::getInstance();
+		// coloca os produtos nas caixas
 		$this->_caixas = $empacotador->getCaixas($produtos);
 	}
 
 
+	/**
+	 * Método para realizar consulta com o webservice dos Correios
+	 *
+	 * Este método realiza tantas requisições quantas caixas de produtos 
+	 * existirem.
+	 *
+	 * @return array Valor e Prazo do frete
+	 */
 	public function consulta() {
+		// instância do Soap Client
 		$soap_cliente = new Zend_Soap_Client('http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx?WSDL');
+		// seta a versão do Soap para 1.1 devido o webservice dos correios 
+		// funcionar somente com esta versão
 		$soap_cliente->setSoapVersion(SOAP_1_1);
+
+		// inicializa os valores em zero
 		$result = array ('valor' => 0, 'prazo' => 0);
+		// laço para realização de requisições para cada caixa
 		foreach ($this->_caixas as $caixa) {
+			// seta os parmetros de dimensões de acordo com os mesmos parâmetros
+			// da caixa
 			$aux['nVlComprimento'] = $caixa['comprimento'];
 			$aux['nVlLargura'] = $caixa['largura'];
 			$aux['nVlAltura'] = $caixa['altura'];
-			$aux['nVlDiametro'] = $this->_diametro;
 			$aux['nVlPeso'] = round($caixa['peso']/1000,2);
+
+			// monta os parametros à serem enviados para os Correios
 			$params = array_merge($this->_params,$aux);
+			// Pega os valores do websevice
 			$response = $soap_cliente->CalcPrecoPrazo($params);
+			// valores do serviço (PAC, SEDEX, ...)
 			$valores = $response->CalcPrecoPrazoResult->Servicos->cServico;
-			if ($valores->Erro == 0) {
+			// Verifica se houve erro na requisição
+			if ($valores->Erro == 0) {// se não houve erro
+				// realiza castings pois os valores são objetos XML
+
+				// incrementa o valor deste frete no valor total do frete
 				$result['valor'] += (int)(str_replace(',','',(string)$valores->Valor));
-				$prazo = (string)$valores->PrazoEntrega;
+				// pega o prazo de entrega
+				$prazo = (int)$valores->PrazoEntrega;
+				// seta sempre o maior prazo de entrega no prazo de entrega 
+				// total
 				if ($result['prazo'] < $prazo) {
 					$result['prazo'] = $prazo;
 				}
 			} else {
+				// se houve erro na requisição lança uma excessão
 				throw new Exception('',102);
 			}
 		}
+		// Seta o erro como zero para indicar que não houve erro
 		$result['erro'] = 0;
 
+		// retorna os valor e prazo de entrega
 		return $result;
 	}
 }
