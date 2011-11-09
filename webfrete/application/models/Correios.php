@@ -41,7 +41,7 @@ class Application_Model_Correios implements Application_Model_Frete
 	 * @param array $params Parametros para envio ao webservice
 	 * @param array $opcao Valores da opção de Frete
 	 */
-	public function __construct($params, $opcao){
+	public function __construct($params, $opcao) {
 		$this->_parseParams($params+$opcao);
 		$this->_setProdutos($params['produtos']);
 	}
@@ -80,136 +80,26 @@ class Application_Model_Correios implements Application_Model_Frete
 	 * @param array $produtos Produtos a serem inseridos
 	 */
 	protected function _setProdutos($produtos) {
-		// laço para cada produto
-		foreach ($produtos as $produto) {
-			// se uma dimensão for maior que 90cm, se a soma das arestas for
-			// maior que 160cm ou se o diâmetro padrão vezes 2 mais o 
-			// comprimento do produto for maior que 104cm é lançada uma 
-			// Exception pois este produto não pode ser enviado pelos correios.
-			if ($produto['largura']    > 90 ||
-				$produto['altura']     > 90 ||
-				$produto['comprimento'] > 90 ||
-				$produto['largura']+$produto['comprimento']+$produto['altura'] > 160 ||
-				$this->_diametro*2 + $produto['comprimento'] > 104 ||
-				$produto['peso'] > 300000
-				) {
-				throw new Exception('', 103);
-			}
-
-			// Aloca o produto em uma caixa
-			$this->_alocaProdutoCaixas($produto);
-		}
+		$empacotador = F1S_Basket_Freight_Packer::getInstance();
+		$this->_caixas = $empacotador->getCaixas($produtos);
 	}
 
-	/**
-	 * Método para alocar um produto em uma caixa.
-	 *
-	 * Este método verifica se o produto pode ser inserido em uma caixa já
-	 * existente. 
-	 * Se não existir nenhuma caixa ou as caixas existentes não comportarem este
-	 * produto, o mesmo é alocado em uma nova caixa.
-	 *
-	 * Todo e qualquer produto é tratado como um paralelepipedo, e quando um
-	 * produto é inserido em uma caixa que já contenha um produto, esta caixa
-	 * recebe a soma dos valores dos lados (comprimento, largura ou altura) da
-	 * caixa e do produto dependendo da posição em que o produto foi colocado, e
-	 * para as demais dimensões são realizadas comparações para verificação de 
-	 * qual é a maior e a caixa recebe o maior valor, permanecendo assim no 
-	 * formato de  paralelepipedo.
-	 *
-	 * @param array $produto Produto contendo o as dimensões, quantidade e peso
-	 */
-	protected function _alocaProdutoCaixas($produto) {
-		// variavel que armazena apenas as dimensões do produto
-		$aux_produto = array();
-		$aux_produto['comprimento'] = $produto['comprimento'];
-		$aux_produto['largura'] = $produto['largura'];
-		$aux_produto['altura'] = $produto['altura'];
-		// ordena o array para que se tenha prioridade pela medida menor o que
-		// facilita o ajuste dos produtos na caixa
-		ksort($aux_produto);
-
-		// laço para alocação de produto de acordo com a quantidade
-		for ($i = 0; $i < $produto['quantidade'];$i++) {
-
-			// verifica se a caixa está vazia
-			if (empty($this->_caixas)) {
-				// aloca o produto na primeira caixa
-				$this->_caixas[] = $produto;
-			} else {
-				// flag para verificação se foi possível a alocação do produto
-				$flag = false;
-
-				// laço para cada medida do produto
-				foreach($aux_produto as $key => $value) {
-					// laço para cada caixa existente
-					foreach ($this->_caixas as &$caixa) {
-						// verifica se o peso da caixa com o novo produto é 
-						// inferior ou igual a 30kg
-						if ($caixa['peso']+$produto['peso'] <= 30000) {
-							// calcula a soma das arestas do conteúdo da caixa
-							$soma_arestas = $caixa['altura'] + $caixa['largura'] + $caixa['comprimento'];
-							// verifica se adicionando o produto nesta caixa não
-							// ultrapassará o limite de soma de arestas de 160cm
-							if ($value+$soma_arestas <= 160) {
-								// soma o lado da caixa com o lado do produto
-								$total_lado = $caixa[$key] + $value;
-								// verifica se a caixa não ultrapassará o limite
-								// do tamamnho do lado que é 90cm
-								if ($total_lado <= 90) {
-									// laço para inserir o produto na caixa
-									foreach ($aux_produto as $indice => $valor) {
-										// verifica se o lado da caixa é o mesmo
-										// lado ao qual foi colocado o produto
-										if ($indice == $key) {
-											// atualiza o tamanho do lado
-											$caixa[$indice] = $total_lado;
-										} else {
-											// se o lado do produto for maior 
-											// que o lado da caixa, a caixa 
-											// passa ter o tamanho do produto
-											if ($aux_produto[$indice] > $valor) {
-												$caixa[$indice] = $aux_produto[$indice];
-											}
-										}
-										// atualiza o peso da caixa
-										$caixa['peso'] += $produto['peso'];
-										// seta a flag de informação de inserção
-										// para verdadeiro
-										$flag = true;
-									}
-								}
-							}
-						}
-						// se o produto foi adicionado sai do laço de caixas
-						if ($flag) {
-							break;
-						}
-					}
-				}
-
-				// verifica se o produto foi adicionado em uma caixa já 
-				// existente, caso não tenha sido aloca em um nova caixa.
-				if (!$flag) {
-					$this->_caixas[] = $produto;
-				}
-			}
-		}
-	}
 
 	public function consulta() {
-	Zend_Debug::dump($this->_caixas);die;
 		$soap_cliente = new Zend_Soap_Client('http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx?WSDL');
 		$soap_cliente->setSoapVersion(SOAP_1_1);
 		$result = array ('valor' => 0, 'prazo' => 0);
 		foreach ($this->_caixas as $caixa) {
 			$aux['nVlComprimento'] = $caixa['comprimento'];
+			$aux['nVlLargura'] = $caixa['largura'];
+			$aux['nVlAltura'] = $caixa['altura'];
+			$aux['nVlDiametro'] = $this->_diametro;
+			$aux['nVlPeso'] = round($caixa['peso']/1000,2);
 			$params = array_merge($this->_params,$aux);
-			$result = $soap_cliente->CalcPrecoPrazo($params);
-			$valores = $result->CalcPrecoPrazoResult->Servicos->cServico;
-			$result = array();
+			$response = $soap_cliente->CalcPrecoPrazo($params);
+			$valores = $response->CalcPrecoPrazoResult->Servicos->cServico;
 			if ($valores->Erro == 0) {
-				$result['valor'] += (float)$valores->Valor;
+				$result['valor'] += (int)(str_replace(',','',(string)$valores->Valor));
 				$prazo = (string)$valores->PrazoEntrega;
 				if ($result['prazo'] < $prazo) {
 					$result['prazo'] = $prazo;
@@ -218,7 +108,8 @@ class Application_Model_Correios implements Application_Model_Frete
 				throw new Exception('',102);
 			}
 		}
-		$result['valor'] = str_replace(',', '', $result['valor']);
+		$result['erro'] = 0;
+
 		return $result;
 	}
 }
