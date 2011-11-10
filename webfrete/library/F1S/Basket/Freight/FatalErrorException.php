@@ -1,5 +1,5 @@
 <?php
-class Zend_Exception_Frete extends Zend_Exception
+class F1S_Basket_Freight_FatalErrorException extends Zend_Exception
 {
 	protected $_xmlMessage;
 

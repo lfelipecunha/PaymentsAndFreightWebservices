@@ -80,7 +80,7 @@ class Application_Model_Correios implements Application_Model_Frete
 			}
 		} else { // caso valores inválidos
 			// lança uma execessão
-			throw new Exception('',101);
+			throw new F1S_Basket_Freight_FreightErrorException('',101);
 		}
 	}
 
@@ -148,7 +148,7 @@ class Application_Model_Correios implements Application_Model_Frete
 				}
 			} else {
 				// se houve erro na requisição lança uma excessão
-				throw new Exception('',102);
+				throw new F1S_Basket_Freight_FreightErrorException('',102);
 			}
 		}
 		// Seta o erro como zero para indicar que não houve erro

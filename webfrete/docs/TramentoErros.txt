@@ -1,0 +1,25 @@
+Tratamento de erros do sistema
+==============================
+
+Para todos os erros graves do sistema, ou seja aqueles que influenciam no 
+funcionamento foi utilizada a classe F1S_Basket_Freight_FatalErrorException.
+
+Os erros de php são tratados como exceção e só são exibidos em ambiente de
+desenvolvimento, em produção utilizada uma mensagem padrão de erro. Isto foi
+realizado para que quando houver um erro de php o mesmo não seja enviado ao
+cliente, quando este acessar o serviço.Entretantos alguns erros do php não são
+passiveis deste tipo de tratamento.
+Os seguintes tipos de erros não podem ser manipulados com uma função definida
+pelo usuário: E_ERROR, E_PARSE, E_CORE_ERROR, E_CORE_WARNING, E_COMPILE_ERROR,
+E_COMPILE_WARNING, e a maioria de E_STRICT.
+
+veja mais sobre estes erro em:
+http://www.php.net/manual/pt_BR/function.set-error-handler.php
+
+F1S_Basket_Freight_FatalErrorException
+======================================
+
+Classe que extende a Zend_Exception, esta classe foi criada para que ao invés de
+uma mensagem simples seja lançado um XML, outra implementação é a capacidade de
+recebimento por parâmetro da mensagem no formato de array, para que seja
+possível a geração de um XML de múltiplos níveis.

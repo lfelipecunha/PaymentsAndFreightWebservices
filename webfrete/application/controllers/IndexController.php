@@ -8,6 +8,7 @@ class IndexController extends Zend_Controller_Action
 	 */
 	public function indexAction()
 	{
+		//a;
 		// verifica se o houve envio de dados por POST
 		if ($this->getRequest()->isPost) { // se houve envio
 			// pega os dados do POST
@@ -44,13 +45,13 @@ class IndexController extends Zend_Controller_Action
 					// armazena os dados do frete no array de fretes
 					$fretes[$grupo][$nome] = $model->consulta();
 
-				} catch (Zend_Exception_Frete $e) { 
+				} catch (F1S_Basket_Freight_FatalErrorException $e) { 
 					// Se houve um erro que é essencial para o sistema, o mesmo
 					// é lançado novamente para que seja tratado pelo mecanismo
 					// responsável. Vide documentação sobre tratamento de erros
 					// no arquivo TratamentoErros.txt
 					throw $e;
-				} catch (Exception $e) {
+				} catch (F1S_Basket_Freight_FreightErrorException $e) {
 					// Se houve uma exceção qualquer pega o código
 					$fretes[$grupo][$nome]['erro'] = $e->getCode();
 				}
@@ -79,7 +80,7 @@ class IndexController extends Zend_Controller_Action
 			$this->view->xml = $xml;
 		}else { // se o accesso ao serviço não foi por POST
 			// lança erro
-			throw new Zend_Exception_Frete('O acesso à este serviço é somente por POST!');
+			throw new F1S_Basket_Freight_FatalErrorException('O acesso à este serviço é somente por POST!');
 		}
 	}
 }

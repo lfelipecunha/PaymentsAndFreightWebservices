@@ -66,7 +66,7 @@ class Application_Model_JadLog implements Application_Model_Frete
 			$this->_params['vPeso'] = $this->_formatNumber($this->_params['vPeso']/1000);
 		}else { // se não são válidos os parâmetros
 			// lança uma exeção
-			throw new Exception('',101);
+			throw new F1S_Basket_Freight_FreightErrorException('',101);
 		}
 	}
 
@@ -96,7 +96,7 @@ class Application_Model_JadLog implements Application_Model_Frete
 		$valor_frete = (string)$xml->Jadlog_Valor_Frete->Retorno;
 		// se houver erro no resultado
 		if ($valor_frete < 0) {
-			throw new Exception('',103);
+			throw new F1S_Basket_Freight_FreightErrorException('',103);
 		}
 		// formata o valor do frete para retorno em sem virgula
 		$valor_frete = explode(',', $valor_frete);

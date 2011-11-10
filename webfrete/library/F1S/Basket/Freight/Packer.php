@@ -166,7 +166,7 @@ class F1S_Basket_Freight_Packer {
 					$produto['largura']+$produto['comprimento']+$produto['altura'] > 160 ||
 					$produto['peso'] > 30000
 					) {
-					throw new Exception('', 103);
+					throw new F1S_Basket_Freight_FreightErrorException('', 103);
 				}
 				// Aloca o produto em uma caixa
 				$this->addItem($produto);
