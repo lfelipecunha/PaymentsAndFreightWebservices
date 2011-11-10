@@ -8,14 +8,18 @@ class ErrorController extends Zend_Controller_Action
 		$xml = new SimpleXmlElement('<?xml version="1.0" encoding="UTF-8"?><consulta></consulta>');
 		$filho = $xml->addChild('error');
 		if (!$errors || !$errors instanceof ArrayObject) {
-			$filho->addChild('message' => 'Ocorreu um erro no Serviço! Por favor tente novamente mais tarde!');
+			$filho->addChild('message','Ocorreu um erro no Serviço! Por favor tente novamente mais tarde!');
 			$message = $xml->asXml();
 		} else {
 			if ($this->getInvokeArg('displayExceptions') == true) {
-				if ($errors->exception instanceof F1S_Freight_FatalErrorException) {
+				if ($errors->exception instanceof F1S_Basket_Freight_FatalErrorException) {
 					$message = $errors->exception->getMessage();
 				} else {
-					$filho->addChild('message',$errors->exception->getMessage());
+					if (APLICATION_ENV === 'development') {
+						$filho->addChild('message',$errors->exception->getMessage());
+					} else {
+						$filho->addChild('message','Ocorreu um erro no Serviço! Por favor tente novamente mais tarde!');
+					}
 					$message = $xml->asXml();
 				}
 			}
