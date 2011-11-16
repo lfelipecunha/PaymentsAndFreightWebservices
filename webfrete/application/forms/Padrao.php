@@ -40,11 +40,17 @@ class Application_Form_Padrao extends Zend_Form {
 			->setRequired(false);
 		$this->addElement($jadlog_senha);
 
-		$cnpj = new Zend_Form_Element('cnpj');
-		$cnpj
+		$jadlog_prazo = new Zend_Form_Element('jadlog_prazo');
+		$jadlog_prazo
 			->setAllowEmpty(true)
 			->setRequired(false);
-		$this->addElement($cnpj);
+		$this->addElement($jadlog_prazo);
+		
+		$jadlog_preco = new Zend_Form_Element('jadlog_preco');
+		$jadlog_preco
+			->setAllowEmpty(true)
+			->setRequired(false);
+		$this->addElement($jadlog_preco);
 
 		$produtos = new Zend_Form_Element('produtos');
 		$produtos
@@ -63,5 +69,6 @@ class Application_Form_Padrao extends Zend_Form {
 			->setAllowEmpty(false)
 			->setRequired(true);
 		$this->addElement($opcoes);
+
 	}
 }

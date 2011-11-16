@@ -12,11 +12,10 @@ seguintes informações:
 
 cep_origem     -> 8 dígitos
 cep_destino    -> 8 dígitos
-correios_login -> 
-correios_senha ->
 jadlog_login   ->
 jadlog_senha   ->
-cnpj -> 
+correios_login -> 
+correios_senha ->
 valor_produtos -> em centavos sem casa decimais ex.: 1020 para R$10,20
 
 produtos
@@ -24,7 +23,6 @@ produtos
 		altura      -> em cm sem casas decimais.
 		largura     -> em cm sem casas decimais.
 		comprimetno -> em cm sem casas decimais.
-		diametro    -> em cm sem casas decimais.
 		peso        -> em gramas(g) sem casas decimais.
 		quantidade  -> número de ítens
 
@@ -39,16 +37,16 @@ Como resposta a loja requisitante terá um XML no seguinte formato:
 	<pac>
 		<erro>0</erro>
 		<nome>Pac</nome>
-		<codigo>1</codigo>
 		<valor>1000</valor>
 		<prazo>10</prazo>
+		<codido>1</codigo>
 	</pac>
 	<expresso>
 		<erro>0</erro>
-		<nome>Sedex</nome>
-		<codigo>2</codigo>
+		<nome>JadLog Expresso</nome>
 		<valor>1500</valor>
 		<prazo>5</prazo>
+		<codido>2</codigo>
 	</expresso>
 	<sedex>
 		<erro>101</erro>
@@ -58,13 +56,12 @@ Como resposta a loja requisitante terá um XML no seguinte formato:
 
 Onde:
 erro   = Se igual à  0, indica que não houveram erros na transação
-tipo_n = serão apresentados tantos tipos quantos forem requisitados
 nome   = nome do tipo de frete em questão
 codigo = Código que representa o tipo de frete no webservice
 valor  = Preço em centavos sem virgulas do frete
 prazo  = Tempo em dias que após a emissão será levado para entrega
 
-Obs.: Para verificar os erros possí­veis vide o arquivo tabela_erros.xls
+Obs.: Para verificar os erros possíveis vide o arquivo tabela_erros.xls
 
 
 Valores para consulta JadLog
@@ -76,7 +73,6 @@ valor_coleta  -> Valor da coleta negociado com a unidade JADLOG. em centavos sem
                  casas decimais
 pagar_destino -> Frete a pagar no destino, 'S' = sim 'N' = não.
 tipo_entrega  -> Tipo de entrega 'R' retira unidade JADLOG, 'D' domicilio.
-
 
 Valores para consulta Correios
 ==============================

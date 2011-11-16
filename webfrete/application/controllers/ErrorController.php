@@ -15,7 +15,7 @@ class ErrorController extends Zend_Controller_Action
 				if ($errors->exception instanceof F1S_Basket_Freight_FatalErrorException) {
 					$message = $errors->exception->getMessage();
 				} else {
-					if (APLICATION_ENV === 'development') {
+					if (APPLICATION_ENV === 'development') {
 						$filho->addChild('message',$errors->exception->getMessage());
 					} else {
 						$filho->addChild('message','Ocorreu um erro no Serviço! Por favor tente novamente mais tarde!');

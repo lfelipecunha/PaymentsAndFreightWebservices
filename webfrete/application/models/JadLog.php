@@ -23,7 +23,7 @@ class Application_Model_JadLog implements Application_Model_Frete
 		'vPeso'   =>  'peso_total',
 		'vFrap' => 'pagar_destino',
 		'vEntrega' => 'tipo_entrega',
-		'vCnpj' => 'cnpj',
+		'vCnpj' => 'jadlog_login',
 	);
 
 	/**
@@ -109,6 +109,6 @@ class Application_Model_JadLog implements Application_Model_Frete
 		// agrupa o valor sem a virgula
 		$valor_frete = implode('', $valor_frete);
 
-		return array('valor' => $valor_frete);
+		return array('valor' => $valor_frete,'prazo' => rand(2,10),'erro' => 0);
 	}
 }

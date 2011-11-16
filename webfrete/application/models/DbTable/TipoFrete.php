@@ -23,4 +23,32 @@ class Application_Model_DbTable_TipoFrete extends Zend_Db_Table_Abstract
 			->limit(1);
 		return $select->query()->fetchAll();
 	}
+
+	public function getAllTypesWithParams() {
+		$parametros = new Application_Model_DbTable_Parametro();
+		$grupo = new Application_Model_DbTable_GrupoTipoFrete();
+		$select = $this->getAdapter()->select();
+		$select
+			->from(
+				array('t' => $this->info(self::NAME)),
+				array('codigo_tipo_frete','nome_tipo_frete','id_tipo_frete')
+			)
+			->joinLeft(
+				array('g' => $grupo->info(self::NAME)),
+				'g.id_grupo = t.id_grupo_tipo_frete',
+				array('nome_grupo')
+			)
+			->joinLeft(
+				array('thp' => 'webfrete_tipo_frete_has_parametro'),
+				'thp.id_tipo_frete = t.id_tipo_frete',
+				''
+			)
+			->joinLeft(
+				array('p' => $parametros->info(self::NAME)),
+				'thp.id_parametro = p.id_parametro',
+				'nome_parametro'
+			)
+			->where('p.tipo_parametro = \'ESTATICO\'');
+		return $select->query()->fetchAll();
+	}
 }

@@ -9,6 +9,7 @@ class Application_Form_JadLogConsulta extends Zend_Form
 			->setRequired(true);
 		$this->addElement($modalidade);
 
+
 		$tipo_seguro = new Zend_Form_Element('seguro');
 		$tipo_seguro
 			->addValidator(new Zend_Validate_InArray(array('A','N')))
@@ -42,12 +43,6 @@ class Application_Form_JadLogConsulta extends Zend_Form
 		$jadlog_senha
 			->setRequired();
 		$this->addElement($jadlog_senha);
-
-		$cnpj = new Zend_Form_Element('cnpj');
-		$cnpj
-			->addValidator(new Zend_Validate_Digits())
-			->setRequired();
-		$this->addElement($cnpj);
 
 		$valor_produtos = new Zend_Form_Element('valor_produtos');
 		$valor_produtos
