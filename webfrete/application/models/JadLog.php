@@ -109,6 +109,8 @@ class Application_Model_JadLog implements Application_Model_Frete
 		// agrupa o valor sem a virgula
 		$valor_frete = implode('', $valor_frete);
 
-		return array('valor' => $valor_frete,'prazo' => rand(2,10),'erro' => 0);
+		$jad_log = new Application_Model_DbTable_JadLogPrazo();
+		$prazo = $jad_log->getPrazo($this->_params['vCepOrig'],$this->_params['vCepDest'],$this->_params['vModalidade']);
+		return array('valor' => $valor_frete,'prazo' => $prazo ,'erro' => 0);
 	}
 }
