@@ -87,6 +87,7 @@ class IndexController extends Zend_Controller_Action
 			// configurações para inserção do menor preço e menor prazo
 			if (!empty($jadlog_fretes)) {
 				$aux = array();
+				$frete = null;
 				if ($jadlog_preco) {
 					$campo = 'valor';
 					$frete = $this->_getMenorFretePorCampo($jadlog_fretes,$campo);
@@ -97,11 +98,13 @@ class IndexController extends Zend_Controller_Action
 				} 
 				if ($jadlog_prazo) {
 					$campo = 'prazo';
-					$frete = $this->_getMenorFretePorCampo($jadlog_fretes,$campo);
-					$nome = $frete['nome'];
-					unset($frete['nome']);
-					$frete['menor_prazo'] = 1;
-					$aux['jad_log'][$nome] = $frete;
+					$frete_prazo = $this->_getMenorFretePorCampo($jadlog_fretes,$campo);
+					if ($frete === null || $frete['prazo'] > $frete_prazo['prazo']) {
+						$nome = $frete_prazo['nome'];
+						unset($frete_prazo['nome']);
+						$frete_prazo['menor_prazo'] = 1;
+						$aux['jad_log'][$nome] = $frete_prazo;
+					}
 				}
 				$fretes += $aux;
 			}

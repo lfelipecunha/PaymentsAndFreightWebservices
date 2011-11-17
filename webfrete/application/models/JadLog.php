@@ -100,11 +100,15 @@ class Application_Model_JadLog implements Application_Model_Frete
 		}
 		// formata o valor do frete para retorno em sem virgula
 		$valor_frete = explode(',', $valor_frete);
-		// verifica se após a virgua tem somente uma casa decimal
-		if (strlen($valor_frete[1]) == 1) {
-			// adiciona um zero no final pois o numero pode vir com uma casa 
-			// decimal
-			$valor_frete[1] .= 0;
+		if (count($valor_frete) > 1 ) {
+			// verifica se após a virgula tem somente uma casa decimal
+			if (strlen($valor_frete[1]) == 1) {
+				// adiciona um zero no final pois o numero pode vir com uma casa 
+				// decimal
+				$valor_frete[1] .= 0;
+			}
+		} else {
+			$valor_frete[1] = '00';
 		}
 		// agrupa o valor sem a virgula
 		$valor_frete = implode('', $valor_frete);
