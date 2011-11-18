@@ -1,0 +1,174 @@
+Geração de prazo de entrega
+===========================
+
+Foram criadas tabelas para geração de prazo, pois tanto o webservice quanto a
+equipe da JadLog não dão este tipo de informação antes do fechamento do pedido
+de frete junto a empresa.
+
+Para obtenção dos prazos foi efetuada uma média dos prazos para cada estado,
+estes dados foram obtidos de uma tabela fornecida pela JadLog, entretanto estes
+dados são referentes ao estado de São Paulo, foi nos orientado novamente pela
+JadLog que para o restante do país basta adicionar um dia ao prazo de entrega.
+
+
+Banco de dados
+==============
+
+CREATE TABLE IF NOT EXISTS `webfrete_estado` (
+  `sigla` char(2) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `cep_inicio` char(9) NOT NULL,
+  `cep_fim` char(9) NOT NULL,
+  `cep_inicio2` char(9) DEFAULT NULL,
+  `cep_fim2` char(9) DEFAULT NULL,
+  PRIMARY KEY (`sigla`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+INSERT INTO `webfrete_estado` (`sigla`, `nome`, `cep_inicio`, `cep_fim`, `cep_inicio2`, `cep_fim2`) VALUES
+('AC', 'Acre', '69900000', '69999999', NULL, NULL),
+('AL', 'Alagoas', '57000000', '57999999', NULL, NULL),
+('AM', 'Amazonas', '69000000', '69299999', '69400000', '69899999'),
+('AP', 'Amapá', '68900000', '68999999', NULL, NULL),
+('BA', 'Bahia', '40000000', '48999999', NULL, NULL),
+('CE', 'Ceara', '60000000', '63999999', NULL, NULL),
+('DF', 'Distrito Federal', '70000000', '73699999', NULL, NULL),
+('ES', 'Espirito Santo', '29000000', '29999999', NULL, NULL),
+('GO', 'Goiais', '73700000', '76799999', NULL, NULL),
+('MA', 'Maranhão', '65000000', '65999999', NULL, NULL),
+('MG', 'Minas Gerais', '30000000', '39999999', NULL, NULL),
+('MS', 'Mato Grosso do Sul', '79000000', '79999999', NULL, NULL),
+('MT', 'Mato Grosso', '78000000', '78999999', NULL, NULL),
+('PA', 'Pará', '66000000', '68899999', NULL, NULL),
+('PB', 'Paraiba', '58000000', '58999999', NULL, NULL),
+('PE', 'Pernambuco', '50000000', '56999999', NULL, NULL),
+('PI', 'Piaui', '64000000', '64999999', NULL, NULL),
+('PR', 'Paraná', '80000000', '87999999', NULL, NULL),
+('RJ', 'Rio de Janeiro', '20000000', '28999999', NULL, NULL),
+('RN', 'Rio Grande do Norte', '59000000', '59999999', NULL, NULL),
+('RO', 'Rondônia', '76800000', '76999999', NULL, NULL),
+('RR', 'Roraima', '69300000', '69399999', NULL, NULL),
+('RS', 'Rio Grande do Sul', '90000000', '99999999', NULL, NULL),
+('SC', 'Santa Catarina', '88000000', '89999999', NULL, NULL),
+('SE', 'Sergipe', '49000000', '49999999', NULL, NULL),
+('SP', 'São Paulo', '00000000', '19999999', NULL, NULL),
+('TO', 'Tocantins', '77000000', '77999999', NULL, NULL);
+
+
+CREATE TABLE IF NOT EXISTS `webfrete_faixa_cep_capital` (
+  `id_faixa_cep` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `cep_inicio` char(9) NOT NULL,
+  `cep_fim` char(9) NOT NULL,
+  `estado` char(2) NOT NULL,
+  PRIMARY KEY (`id_faixa_cep`),
+  KEY `estado` (`estado`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
+
+
+INSERT INTO `webfrete_faixa_cep_capital` (`id_faixa_cep`, `cep_inicio`, `cep_fim`, `estado`) VALUES
+(1, '01000001', '05999999', 'SP'),
+(2, '08000000', '08499999', 'SP'),
+(3, '30000001', '31999999', 'MG'),
+(4, '80000001', '82999999', 'PR'),
+(5, '20000001', '23799999', 'RJ'),
+(6, '88000001', '88099999', 'SC'),
+(7, '70000001', '70639999', 'DF'),
+(8, '70700000', '70999999', 'DF'),
+(9, '29000001', '29099999', 'ES'),
+(10, '79000001', '79124999', 'MS'),
+(11, '90000001', '91999999', 'RS'),
+(12, '74000001', '74899999', 'GO'),
+(13, '77000001', '77249999', 'TO'),
+(14, '40000001', '42499999', 'BA'),
+(15, '78000001', '78099999', 'MT'),
+(16, '57000001', '57099999', 'AL'),
+(17, '49000001', '49098999', 'SE'),
+(18, '58000001', '58099999', 'PB'),
+(19, '50000001', '52999999', 'PE'),
+(20, '64000001', '64099999', 'PI'),
+(21, '76800001', '76834999', 'RO'),
+(22, '69900001', '69990999', 'AC'),
+(23, '68950001', '68911999', 'AP'),
+(24, '69000001', '69099999', 'AM'),
+(25, '60000001', '61599999', 'CE'),
+(26, '65000001', '65109999', 'MA'),
+(27, '66000001', '66999999', 'PA'),
+(28, '59000001', '59139999', 'RN'),
+(29, '69300001', '69339999', 'RR');
+
+
+CREATE TABLE IF NOT EXISTS `webfrete_jadlog_prazo` (
+  `id_jadlog_prazo` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `estado` char(2) NOT NULL,
+  `regiao` enum('CAPITAL','INTERIOR') NOT NULL DEFAULT 'INTERIOR',
+  `prazo_rodoviario` int(10) unsigned NOT NULL,
+  `prazo_expresso` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id_jadlog_prazo`),
+  KEY `estado` (`estado`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=57 ;
+
+
+INSERT INTO `webfrete_jadlog_prazo` (`id_jadlog_prazo`, `estado`, `regiao`, `prazo_rodoviario`, `prazo_expresso`) VALUES
+(1, 'AC', 'INTERIOR', 25, 10),
+(2, 'AC', 'CAPITAL', 15, 2),
+(3, 'AL', 'INTERIOR', 12, 8),
+(4, 'Al', 'CAPITAL', 5, 2),
+(5, 'AM', 'INTERIOR', 36, 15),
+(6, 'AM', 'CAPITAL', 20, 2),
+(7, 'AP', 'INTERIOR', 25, 14),
+(8, 'AP', 'CAPITAL', 13, 12),
+(9, 'BA', 'INTERIOR', 16, 11),
+(10, 'BA', 'CAPITAL', 8, 5),
+(11, 'CE', 'INTERIOR', 17, 12),
+(12, 'CE', 'CAPITAL', 12, 4),
+(13, 'DF', 'INTERIOR', 8, 5),
+(14, 'DF', 'CAPITAL', 3, 2),
+(15, 'ES', 'INTERIOR', 10, 7),
+(16, 'ES', 'CAPITAL', 5, 3),
+(17, 'GO', 'INTERIOR', 13, 12),
+(18, 'GO', 'CAPITAL', 5, 2),
+(19, 'MA', 'INTERIOR', 20, 15),
+(20, 'MA', 'CAPITAL', 12, 6),
+(21, 'MG', 'INTERIOR', 10, 7),
+(22, 'MG', 'CAPITAL', 7, 5),
+(23, 'MS', 'INTERIOR', 6, 2),
+(24, 'MS', 'CAPITAL', 12, 7),
+(25, 'MT', 'INTERIOR', 15, 9),
+(26, 'MT', 'CAPITAL', 7, 2),
+(27, 'PA', 'INTERIOR', 22, 15),
+(28, 'PA', 'CAPITAL', 15, 4),
+(29, 'PB', 'INTERIOR', 17, 10),
+(30, 'PB', 'CAPITAL', 6, 3),
+(31, 'PE', 'INTERIOR', 15, 10),
+(32, 'PE', 'CAPITAL', 7, 3),
+(33, 'PI', 'INTERIOR', 20, 12),
+(34, 'PI', 'CAPITAL', 9, 2),
+(35, 'PR', 'INTERIOR', 11, 7),
+(36, 'PR', 'CAPITAL', 6, 3),
+(37, 'RJ', 'INTERIOR', 6, 4),
+(38, 'RJ', 'CAPITAL', 5, 4),
+(39, 'RN', 'INTERIOR', 17, 11),
+(40, 'RN', 'CAPITAL', 11, 5),
+(41, 'RO', 'INTERIOR', 11, 7),
+(42, 'RO', 'CAPITAL', 6, 3),
+(43, 'PR', 'INTERIOR', 22, 15),
+(44, 'PR', 'CAPITAL', 19, 5),
+(45, 'RR', 'INTERIOR', 25, 12),
+(46, 'RR', 'CAPITAL', 23, 2),
+(47, 'RS', 'INTERIOR', 9, 7),
+(48, 'RS', 'CAPITAL', 5, 4),
+(49, 'SC', 'INTERIOR', 9, 7),
+(50, 'SC', 'CAPITAL', 6, 4),
+(51, 'SE', 'INTERIOR', 12, 9),
+(52, 'SE', 'CAPITAL', 7, 4),
+(53, 'SP', 'INTERIOR', 6, 5),
+(54, 'SP', 'CAPITAL', 5, 3),
+(55, 'TO', 'INTERIOR', 14, 10),
+(56, 'TO', 'CAPITAL', 5, 2);
+
+ALTER TABLE `webfrete_faixa_cep_capital`
+  ADD CONSTRAINT `webfrete_faixa_cep_capital_ibfk_1` FOREIGN KEY (`estado`) REFERENCES `webfrete_estado` (`sigla`);
+
+ALTER TABLE `webfrete_jadlog_prazo`
+  ADD CONSTRAINT `webfrete_jadlog_prazo_ibfk_1` FOREIGN KEY (`estado`) REFERENCES `webfrete_estado` (`sigla`);
+
