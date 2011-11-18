@@ -82,4 +82,3 @@ servico_adicional       -> S ou N
 valor_servico_adicional -> se servico_adicional = 'S' então deve ser declarado 
                            valor do serviço em centavos sem casas decimais
 aviso_recebimetno       -> S ou N
-
