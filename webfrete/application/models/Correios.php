@@ -120,39 +120,75 @@ class Application_Model_Correios implements Application_Model_Frete
 		$result = array ('valor' => 0, 'prazo' => 0);
 		// laço para realização de requisições para cada caixa
 		foreach ($this->_caixas as $caixa) {
-			// seta os parmetros de dimensões de acordo com os mesmos parâmetros
-			// da caixa
-			$aux['nVlComprimento'] = $caixa['comprimento'];
-			$aux['nVlLargura'] = $caixa['largura'];
-			$aux['nVlAltura'] = $caixa['altura'];
-			$aux['nVlPeso'] = round($caixa['peso']/1000,2);
+			// bloco de tentativa de comunicação com o webservice dos correios
+			try {
+				// seta os parmetros de dimensões de acordo com os mesmos parâmetros
+				// da caixa
+				$aux['nVlComprimento'] = $caixa['comprimento'];
+				$aux['nVlLargura'] = $caixa['largura'];
+				$aux['nVlAltura'] = $caixa['altura'];
+				$aux['nVlPeso'] = round($caixa['peso']/1000,2);
 
-			// monta os parametros à serem enviados para os Correios
-			$params = array_merge($this->_params,$aux);
-			// Pega os valores do websevice
-			$response = $soap_cliente->CalcPrecoPrazo($params);
-			// valores do serviço (PAC, SEDEX, ...)
-			$valores = $response->CalcPrecoPrazoResult->Servicos->cServico;
-			// Verifica se houve erro na requisição
-			if ($valores->Erro == 0) {// se não houve erro
-				// realiza castings pois os valores são objetos XML
+				// monta os parametros à serem enviados para os Correios
+				$params = array_merge($this->_params,$aux);
+				// Pega os valores do websevice
+				$response = $soap_cliente->CalcPrecoPrazo($params);
+				// valores do serviço (PAC, SEDEX, ...)
+				$valores = $response->CalcPrecoPrazoResult->Servicos->cServico;
+				// Verifica se houve erro na requisição
+				if ($valores->Erro == 0) {// se não houve erro
+					// realiza castings pois os valores são objetos XML
 
-				// incrementa o valor deste frete no valor total do frete
-				$result['valor'] += (int)(str_replace(',','',(string)$valores->Valor));
-				// pega o prazo de entrega
-				$prazo = (int)$valores->PrazoEntrega;
-				// seta sempre o maior prazo de entrega no prazo de entrega 
-				// total
-				if ($result['prazo'] < $prazo) {
-					$result['prazo'] = $prazo;
+					// incrementa o valor deste frete no valor total do frete
+					$result['valor'] += (int)(str_replace(',','',(string)$valores->Valor));
+					// pega o prazo de entrega
+					$prazo = (int)$valores->PrazoEntrega;
+					// seta sempre o maior prazo de entrega no prazo de entrega 
+					// total
+					if ($result['prazo'] < $prazo) {
+						$result['prazo'] = $prazo;
+					}
+					// Seta o erro como zero para indicar que não houve erro
+					$result['erro'] = 0;
+				} else {
+					// se houve erro na requisição lança uma excessão
+					throw new F1S_Basket_Freight_FreightErrorException('',102);
 				}
-			} else {
-				// se houve erro na requisição lança uma excessão
-				throw new F1S_Basket_Freight_FreightErrorException('',102);
+			} catch (\SoapFault $sp){ // caso tenha ocorrido algum erro de comunicação com o servidor dos correios
+				// inicializa o peso
+				$peso = 0;
+				// pega o cep de destino
+				$cep_destino =$this->_params['sCepDestino'];
+
+				// faz o somatório dos pesos das caixas
+				foreach ($this->_caixas as $caixa) {
+					$peso += $caixa['peso'];
+				}
+				// instância de modelo para obtenção dos dados de contingência
+				$model = new Application_Model_DbTable_TabelaContingencia();
+
+				// pega os valores da contingência
+				$valores = $model->getValuesByTipoFreteCode($this->_params['nCdServico'],$cep_destino);
+				// seta o prazo de entrega
+				$result['prazo'] = $valores[0]['prazo'];
+
+				// se o peso das caixas é maior que 8kg
+				if ($peso > 8000) {
+					// faz um calculo para pegar o valor referente ao peso
+					$result['valor'] = (int)($peso/8000*$valores[0]['valor']);
+				} else {
+					// se o peso das caixas é inferior ou igual a 8kg seta o 
+					// valor da tabela de contingência
+					$result['valor'] = $valores[0]['valor'];
+				} 
+				// seta o erro igual 999 que indica que os dados vieram de uma 
+				// contingência
+				$result['erro'] = 999;
+				// interrompe o laço de calculo pois se não houve comunicação 
+				//com os correios o valor não deve realizar o processo novamente
+				break;
 			}
 		}
-		// Seta o erro como zero para indicar que não houve erro
-		$result['erro'] = 0;
 
 		// retorna os valor e prazo de entrega
 		return $result;
