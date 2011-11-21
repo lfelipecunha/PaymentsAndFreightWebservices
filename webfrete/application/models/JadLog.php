@@ -92,7 +92,7 @@ class Application_Model_JadLog implements Application_Model_Frete
 			// objeto com o resultado  da requisição do webservice
 			$result = $soap_client->valorar($this->_params);
 		} catch (SoapFault $sp) {
-			throw new F1S_Basket_Freight_FreightErrorException('',103)/;
+			throw new F1S_Basket_Freight_FreightErrorException('',103);
 		}
 		// cria xml apartir do resultado
 		$xml = simplexml_load_string($result->valorarReturn);
