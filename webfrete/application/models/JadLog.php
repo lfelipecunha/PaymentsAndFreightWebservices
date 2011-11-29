@@ -88,12 +88,20 @@ class Application_Model_JadLog implements Application_Model_Frete
 	public function consulta() {
 		// instândo Soap Client
 		$soap_client = new Zend_Soap_Client('http://jadlog.com.br/JadlogEdiWs/services/ValorFreteBean?WSDL');
+		// define o timeout para a conexão do serviço
+		$context = stream_context_create(array('http' => array('timeout' => 8)));
+		$old = ini_set('default_socket_timeout',8);
+		$soap_cliente->setStreamContext($context);
+
 		try {
 			// objeto com o resultado  da requisição do webservice
 			$result = $soap_client->valorar($this->_params);
 		} catch (SoapFault $sp) {
 			throw new F1S_Basket_Freight_FreightErrorException('',103);
 		}
+		// seta o timeout dos sockets novamente para o padrão
+		ini_set('default_socket_timeout',$old);
+
 		// cria xml apartir do resultado
 		$xml = simplexml_load_string($result->valorarReturn);
 		// pega o valor do frete
