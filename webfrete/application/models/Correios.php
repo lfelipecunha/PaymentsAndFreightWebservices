@@ -115,6 +115,10 @@ class Application_Model_Correios implements Application_Model_Frete
 		// seta a versão do Soap para 1.1 devido o webservice dos correios 
 		// funcionar somente com esta versão
 		$soap_cliente->setSoapVersion(SOAP_1_1);
+		// define o timeout para a conexão do serviço
+		$context = stream_context_create(array('http' => array('timeout' => 8)));
+		$old = ini_set('default_socket_timeout',8);
+		$soap_cliente->setStreamContext($context);
 
 		// inicializa os valores em zero
 		$result = array ('valor' => 0, 'prazo' => 0);
@@ -154,7 +158,7 @@ class Application_Model_Correios implements Application_Model_Frete
 					// se houve erro na requisição lança uma excessão
 					throw new F1S_Basket_Freight_FreightErrorException('',102);
 				}
-			} catch (\SoapFault $sp){ // caso tenha ocorrido algum erro de comunicação com o servidor dos correios
+			} catch (SoapFault $sp){ // caso tenha ocorrido algum erro de comunicação com o servidor dos correios
 				// inicializa o peso
 				$peso = 0;
 				// pega o cep de destino
@@ -169,26 +173,35 @@ class Application_Model_Correios implements Application_Model_Frete
 
 				// pega os valores da contingência
 				$valores = $model->getValuesByTipoFreteCode($this->_params['nCdServico'],$cep_destino);
-				// seta o prazo de entrega
-				$result['prazo'] = $valores[0]['prazo'];
 
-				// se o peso das caixas é maior que 8kg
-				if ($peso > 8000) {
-					// faz um calculo para pegar o valor referente ao peso
-					$result['valor'] = (int)($peso/8000*$valores[0]['valor']);
-				} else {
-					// se o peso das caixas é inferior ou igual a 8kg seta o 
-					// valor da tabela de contingência
-					$result['valor'] = $valores[0]['valor'];
-				} 
-				// seta o erro igual 999 que indica que os dados vieram de uma 
-				// contingência
-				$result['erro'] = 999;
+				// Caso exista contingência para o tipo de frete
+				if (!empty($valores)) {
+					// seta o prazo de entrega
+					$result['prazo'] = $valores[0]['prazo'];
+
+					// se o peso das caixas é maior que 8kg
+					if ($peso > 8000) {
+						// faz um calculo para pegar o valor referente ao peso
+						$result['valor'] = (int)($peso/8000*$valores[0]['valor']);
+					} else {
+						// se o peso das caixas é inferior ou igual a 8kg seta o 
+						// valor da tabela de contingência
+						$result['valor'] = $valores[0]['valor'];
+					} 
+					// seta o erro igual 999 que indica que os dados vieram de uma 
+					// contingência
+					$result['erro'] = 999;
+				} else { // se não existir contingência
+					throw new F1S_Basket_Freight_FreightErrorException('',102);
+				}
 				// interrompe o laço de calculo pois se não houve comunicação 
 				//com os correios o valor não deve realizar o processo novamente
 				break;
 			}
 		}
+
+		// seta o timeout dos sockets novamente para o padrão
+		ini_set('default_socket_timeout',$old);
 
 		// retorna os valor e prazo de entrega
 		return $result;
