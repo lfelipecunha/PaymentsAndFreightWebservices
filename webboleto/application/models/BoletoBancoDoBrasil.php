@@ -56,8 +56,10 @@ class Application_Model_BoletoBancoDoBrasil extends Application_Model_Boleto
 			'nosso_numero'    => $this->_getNossoNumero(),
 		);
 		$vars += $this->_params;
-		// adiciona o digito verificador para o campo nosso número
+		// adiciona o digito verificador para os campos necessários
 		$vars['nosso_numero'] .= '-'.$this->_modulo11($vars['nosso_numero']);
+		$vars['agencia'] .='-'.$this->_modulo11($vars['agencia']);
+		$vars['conta'] .='-'.$this->_modulo11($vars['conta']);
 		return $vars;
 	}
 
