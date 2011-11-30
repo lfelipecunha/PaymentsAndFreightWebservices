@@ -133,7 +133,8 @@ class Application_Model_BoletoBancoDoBrasil extends Application_Model_Boleto
 				$padding = 11 - $convenio_lenght;
 				break;
 			case 7:
-				$padding = 10;
+			case 8:
+				$padding = 17 - $convenio_lenght;
 		}
 		$nosso_numero = $this->codigo_cedente . str_pad((int)$this->nosso_numero,$padding,0,STR_PAD_LEFT);
 		return $nosso_numero;
