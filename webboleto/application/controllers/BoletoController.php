@@ -58,6 +58,9 @@ class BoletoController extends Zend_Controller_Action {
 	public function consultaAction(){
 		$result = array('errors'=>1,'descricao' => 'Parâmetros inválidos');
 		if ($this->getRequest()->isGet()){
+			$xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><consulta></consulta>');
+
+			$parametros = $xml->addChild('parametros');
 			$params = $this->getRequest()->getQuery();
 			$boleto = new Application_Model_DbTable_Boleto();
 			if (!empty($params['boleto_nome'])) {
@@ -68,18 +71,20 @@ class BoletoController extends Zend_Controller_Action {
 					$static = false;
 				}
 				$parmas_boleto = $boleto->getParams($boleto_nome,$static);
-				$result = array();
-				$result['errors'] = 0;
+				$xml->addChild('errors',0);
+				$i = 1;
 				foreach ($parmas_boleto as $param){
-					$result[] = $param;
+					$parametros->addChild('parmametro_'.$i++,$param);
 				}
 			} else if(isset($params['lista_boletos'])){
-				$result = array();
 				$result = $boleto->getBoletosDisponiveis();
+				$i = 1;
+				foreach ($result as $valor) {
+					$parametros->addChild('parametro_'.$i,$valor);
+				}
 			}
 		}
-
-		$this->view->result = $result;
+		$this->view->xml= $xml;
 		$this->getResponse()->setHeader('Content-Type', 'text/xml');
 	}
 }

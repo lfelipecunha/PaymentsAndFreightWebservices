@@ -9,7 +9,7 @@ class Application_Form_Boleto extends Zend_Form {
 		$codigo_cedente = new Zend_Form_Element('codigo_cedente');
 		$codigo_cedente
 			->addValidator(new Zend_Validate_Digits())
-			->addValidator(new Zend_Validate_StringLength(array('max' => 6,'min'=>1)))
+			->addValidator(new Zend_Validate_StringLength(array('min'=>1)))
 			->setRequired(true)
 			->addFilter(new Zend_Filter_Padding(6, 0));
 		$this->addElement($codigo_cedente);
@@ -91,6 +91,18 @@ class Application_Form_Boleto extends Zend_Form {
 			->setRequired(true)
 			->addFilter($urldecode);
 		$this->addElement($cliente_cidade);
+
+		$conta = new Zend_Form_Element('conta');
+		$conta
+			->setAllowEmpty(true)
+			->setRequired(false);
+		$this->addElement($conta);
+		
+		$carteira = new Zend_Form_Element('carteira');
+		$carteira
+			->setAllowEmpty(true)
+			->setRequired(false);
+		$this->addElement($carteira);
 
 		// cep do cliente
 		$cliente_cep = new Zend_Form_Element('cliente_cep');

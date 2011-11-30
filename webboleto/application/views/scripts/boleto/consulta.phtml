@@ -1,18 +1,1 @@
-<?php echo '<?xml version="1.0" encoding="iso-8859-1"?>' ?>
-<consulta>
-<?php $cont = 1 ?>
-<?php $total = count($this->result) ?>
-<?php foreach ($this->result as $key => $value) : ?>
-	<?php if (!is_numeric($key)) : ?>
-		<<?php echo $key ?>><?php echo $value ?></<?php echo $key ?>>
-	<?php else : ?>
-		<?php if ($cont == 1) : ?>
-			<parametros>
-		<?php endif ?>
-			<parametro_<?php echo $cont?>><?php echo $value ?></parametro_<?php echo $cont++?>> 
-			<?php if($cont >= $total) : ?>
-				</parametros>
-			<?php endif ?>
-	<?php endif ?>
-<?php endforeach ?>
-</consulta>
+<?php echo $this->xml->asXml();?>
