@@ -1,6 +1,6 @@
 <?php
 /**
- * Classe responsÃ¡vel pelo tratamento de dados para a geraÃ§Ã£o de boletos do
+ * Classe responsável pelo tratamento de dados para a geração de boletos do
  * Bradesco
  */
 class Application_Model_BoletoBradesco extends Application_Model_Boleto
@@ -14,7 +14,7 @@ class Application_Model_BoletoBradesco extends Application_Model_Boleto
 	/**
 	 * Construtor da classe
 	 *
-	 * @param array $params parametros necessÃ¡rios para a geraÃ§Ã£o do boleto
+	 * @param array $params parametros necessários para a geração do boleto
 	 */
 	public function __construct($params) {
 		// inicializa os atributos do modelo
@@ -22,23 +22,23 @@ class Application_Model_BoletoBradesco extends Application_Model_Boleto
 	}
 
 	/**
-	 * MÃ©todo para obtenÃ§Ã£o dos valores do boleto jÃ¡ formatados
+	 * Método para obtenção dos valores do boleto já formatados
 	 *
 	 * @return array Valores Formatados
 	 */
 	public function getParams() {
-		// pega os nÃºmeros do cÃ³digo de barras
+		// pega os números do código de barras
 		$codigo_barras = $this->_getValorCodigoBarras();
-		// gera o cÃ³digo de barras
+		// gera o código de barras
 		$barcode = $this->_getBarcode($codigo_barras);
 
-		// pega a linha digitÃ¡vel
+		// pega a linha digitável
 		$linha_digitavel = $this->_getLinhaDigitavel();
 
-		// pega o nosso nÃºmero
+		// pega o nosso número
 		$nosso_numero = $this->_getNossoNumero();
 
-		// objeto de data para formataÃ§Ã£o da data de vencimento
+		// objeto de data para formatação da data de vencimento
 		$data = new Zend_Date($this->vencimento);
 
 		// logo do bradesco
@@ -62,7 +62,7 @@ class Application_Model_BoletoBradesco extends Application_Model_Boleto
 	}
 
 	/**
-	 * Monta a linha digitÃ¡vel do boleto conforme especificaÃ§Ãµes do Bradesco
+	 * Monta a linha digitável do boleto conforme especificações do Bradesco
 	 *
 	 * @return string
 	 */
@@ -86,30 +86,16 @@ class Application_Model_BoletoBradesco extends Application_Model_Boleto
 		return "$campo1 $campo2 $campo3 $campo4 $campo5";
 	}
 
-	/**
-	 * Formata um campo da linha digitavel inserindo o ponto de separaÃ§Ã£o e o 
-	 * dÃ­gito verificador
-	 *
-	 * @param string $campo Campo a ser formatado
-	 * @return string Campo Formatado
-	 */
-	protected function _formatCampo($campo) {
-		// adiciona ao campo o digito verificador
-		$campo .= $this->_modulo10($campo);
-		// separa o campo na quinta posiÃ§Ã£o por um ponto
-		$campo = substr($campo,0,5).'.'.substr($campo,5,strlen($campo)-5);
-		return $campo;
-	}
 
 	/**
-	 * MÃ©todo para obtenÃ§Ã£o da numeraÃ§Ã£o cÃ³digo de barras, conforme documentaÃ§Ã£o
+	 * Método para obtenção da numeração código de barras, conforme documentação
 	 * do bradesco
 	 *
 	 * @return string
 	 */
 	protected function _getValorCodigoBarras() {
 		$parte1 = $this->_codigoBanco.$this->_moeda;
-		$parte2 = 
+		$parte2 =
 			$this->_fatorVencimento($this->vencimento).
 			str_pad($this->valor,10,'0',STR_PAD_LEFT).
 			$this->_getCampoLivre();
@@ -118,13 +104,13 @@ class Application_Model_BoletoBradesco extends Application_Model_Boleto
 	}
 
 	/**
-	 * MÃ©todo que monta e retorna o Campo Livre conforme documentaÃ§Ã£o do 
+	 * Método que monta e retorna o Campo Livre conforme documentação do
 	 * bradesco
 	 *
 	 * @return string
 	 */
 	protected function _getCampoLivre() {
-		return 
+		return
 			$this->agencia.
 			$this->carteira.
 			$this->_getNossoNumero().
@@ -133,7 +119,7 @@ class Application_Model_BoletoBradesco extends Application_Model_Boleto
 	}
 
 	/**
-	 * MÃ©todo para formataÃ§Ã£o e retorno do nosso nÃºmero, conforme documentaÃ§Ã£o
+	 * Método para formatação e retorno do nosso número, conforme documentação
 	 * do bradesco
 	 *
 	 * @return string

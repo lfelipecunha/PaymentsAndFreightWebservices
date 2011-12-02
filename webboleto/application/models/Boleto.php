@@ -18,7 +18,7 @@ abstract class Application_Model_Boleto
 	public abstract function getParams();
 
 	/**
-	 * Método para iniicialização dos parâmetros de acordo com os parâmetros 
+	 * Método para iniicialização dos parâmetros de acordo com os parâmetros
 	 * necessários para cada tipo de boleto
 	 *
 	 * @param array $params Parametros a serem inseridos
@@ -33,7 +33,7 @@ abstract class Application_Model_Boleto
 	}
 
 	/**
-	 * Método para pesquisa de valores no atributo de parâmetros para quando 
+	 * Método para pesquisa de valores no atributo de parâmetros para quando
 	 * houver tentativa de acesso a um atributo do objeto que não estiver setado
 	 *
 	 * @param string $name Nome do Atributo
@@ -183,4 +183,18 @@ abstract class Application_Model_Boleto
 		return base64_encode(ob_get_clean());
 	}
 
+	/**
+	 * Formata um campo da linha digitavel inserindo o ponto de separação e o
+	 * dígito verificador
+	 *
+	 * @param string $campo Campo a ser formatado
+	 * @return string Campo Formatado
+	 */
+	protected function _formatCampo($campo) {
+		// adiciona ao campo o digito verificador
+		$campo .= $this->_modulo10($campo);
+		// separa o campo na quinta posição por um ponto
+		$campo = substr($campo,0,5).'.'.substr($campo,5,strlen($campo)-5);
+		return $campo;
+	}
 }

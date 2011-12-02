@@ -49,7 +49,7 @@ class BoletoController extends Zend_Controller_Action {
 			$errors = array('Parâmetros são obrigatórios');
 		}
 		// envia as variáveis para a camada de visualização
-		$this->getResponse()->setHeader('Content-Type', 'text/xml');
+		//$this->getResponse()->setHeader('Content-Type', 'text/xml');
 		$this->view->vars = $vars;
 		$this->view->errors = $errors;
 		$this->view->boleto_nome = $boleto_nome;
