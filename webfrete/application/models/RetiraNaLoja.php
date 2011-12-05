@@ -1,6 +1,6 @@
 <?php
 /**
- * Classe que cálcula o preço e o prazo para o frete quando o(s) produto(s) 
+ * Classe que cálcula o preço e o prazo para o frete quando o(s) produto(s)
  * for(em) retirado(s) na loja.
  *
  */
@@ -19,7 +19,7 @@ class Application_Model_RetiraNaLoja implements Application_Model_Frete
 	 * @param array $opcao  Parâmetro com o valor adicional do frete
 	 */
 	public function __construct($params,$opcao) {
-		// se o valor adicional estiver setado seta o valor do frete com este 
+		// se o valor adicional estiver setado seta o valor do frete com este
 		// valor
 		if (!empty($opcao['valor_servico_adicional'])) {
 			$this->_valor = $opcao['valor_servico_adicional'];
