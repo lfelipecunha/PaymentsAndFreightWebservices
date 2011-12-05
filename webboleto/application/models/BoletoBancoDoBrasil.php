@@ -43,23 +43,21 @@ class Application_Model_BoletoBancoDoBrasil extends Application_Model_Boleto
 
 		// variáveis para a camada de visualização
 		$vars = array (
-			'barcode'         => $barcode,
-			'carteira'        => $this->carteira,
-			'codigo_banco'    => $this->_codigoBanco.'-'.$this->_modulo10($this->_codigoBanco),
-			'codigo_cedente'  => $this->codigo_cedente.'-'.$this->_modulo10($this->codigo_cedente),
-			'data_hoje'       => date('d/m/Y'),
-			'especie'         => 'R$',
-			'linha_digitavel' => $linha_digitavel,
-			'logo'            => base64_encode($logo),
-			'valor'           => number_format(($this->valor/100),2,',','.'),
-			'vencimento'      => $data->toString('dd/MM/Y'),
-			'nosso_numero'    => $this->_getNossoNumero(),
+			'barcode'          => $barcode,
+			'carteira'         => $this->carteira,
+			'codigo_banco'     => $this->_codigoBanco.'-'.$this->_modulo10($this->_codigoBanco),
+			'codigo_cedente'   => $this->codigo_cedente,
+			'data_hoje'        => date('d/m/Y'),
+			'especie'          => 'R$',
+			'linha_digitavel'  => $linha_digitavel,
+			'logo'             => base64_encode($logo),
+			'valor'            => number_format(($this->valor/100),2,',','.'),
+			'vencimento'       => $data->toString('dd/MM/Y'),
+			'nosso_numero'     => $this->_getNossoNumero().'-'.$this->_modulo11($this->_getNossoNumero()),
+			'numero_documento' => (int)$this->nosso_numero,
+			'agencia'          => $this->agencia.'-'.$this->_modulo11($this->agencia),
 		);
 		$vars += $this->_params;
-		// adiciona o digito verificador para os campos necessários
-		$vars['nosso_numero'] .= '-'.$this->_modulo11($vars['nosso_numero']);
-		$vars['agencia'] .='-'.$this->_modulo11($vars['agencia']);
-		$vars['conta'] .='-'.$this->_modulo11($vars['conta']);
 		return $vars;
 	}
 
@@ -71,7 +69,7 @@ class Application_Model_BoletoBancoDoBrasil extends Application_Model_Boleto
 	 */
 	protected function _getLinhaDigitavel($codigo_barras) {
 
-		// as definições abaixo realizadas são executas conforme o manual de 
+		// as definições abaixo realizadas são executas conforme o manual de
 		// desenvolvimento
 
 		$campo1 = $this->_codigoBanco.$this->_moeda.substr($codigo_barras,19,5);

@@ -1,8 +1,8 @@
 <html>
 	<head>
 		<style>
-			table {
-				font: 6px arial;
+			table, span {
+				font: 12px arial;
 			}
 			table {
 				width:667px;
@@ -60,7 +60,7 @@
 
 			.instrucoes {
 				border-left: none !important;
-				font:11px arial !important;
+				font:12px arial !important;
 			}
 
 			.first {
@@ -78,6 +78,7 @@
 				font: 6px arial;
 				padding-bottom: 4px;
 				margin-top: -9px;
+				clear:both;
 			}
 
 			.table1 {
@@ -86,10 +87,12 @@
 
 			img.barcode_img {
 				margin-top:8px;
+				float:left;
 			}
 		</style>
 	</head>
 	<body>
+<span>Recibo do Sacado</span>
 		<table class="table1">
 			<tr>
 				<td class="logo"colspan="2" rowspan="2"><img  src="data:image/x-icon;base64,<?php echo $this->vars['logo'] ?>"/></td>
@@ -105,11 +108,11 @@
 					<?php echo $this->vars['nome_cedente'] ?>
 				</td>
 				<td colspan="5">
-					<span>Agência/Codigo Cedente</span>
+					<span>Agência/Código Cedente</span>
 					<?php echo $this->vars['agencia'].' / '.$this->vars['conta']?>
 				</td>
 				<td>
-					<span>Especie</span>
+					<span>Espécie</span>
 					<?php echo $this->vars['especie'] ?>
 				</td>
 				<td class="direita last">
@@ -120,6 +123,7 @@
 			<tr>
 				<td colspan="3">
 					<span>Nº Documento</span>
+					<?php echo $this->vars['numero_documento'] ?>
 				</td>
 				<td colspan="3">
 					<span>Data Documento</span>
@@ -151,7 +155,6 @@
 				</td>
 			</tr>
 		</table>
-
 <div class="cortar">Corte aqui</div>
 
 		<table>
@@ -179,7 +182,7 @@
 					<?php echo $this->vars['nome_cedente']; ?>
 				</td>
 				<td class="direita">
-					<span>Agência/Codigo Cedente</span>
+					<span>Agência/Código Cedente</span>
 					<?php echo $this->vars['agencia'].' / '.$this->vars['conta']?>
 				</td>
 			</tr>
@@ -190,9 +193,11 @@
 				</td>
 				<td colspan="5">
 					<span>Nº documento</span>
+					<?php echo $this->vars['numero_documento'] ?>
 				</td>
 				<td>
 					<span>Espécie DOC</span>
+					DM
 				</td>
 				<td>
 					<span>Aceite</span>
@@ -214,7 +219,7 @@
 					<?php echo $this->vars['carteira'] ?>
 				</td>
 				<td>
-					<span>Especie</span>
+					<span>Espécie</span>
 					<?php echo $this->vars['especie'] ?>
 				</td>
 				<td colspan="3">
@@ -263,6 +268,7 @@
 			</tr>
 		</table>
 		<img class="barcode_img" src="data:image/x-icon;base64,<?php echo $this->vars['barcode'] ?>"/>
+		<span>Autenticação Mecânica / Ficha de Compensação</span>
 		<div class="cortar">Corte aqui</div>
 	</body>
 </html>
