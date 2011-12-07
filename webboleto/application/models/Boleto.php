@@ -102,7 +102,7 @@ abstract class Application_Model_Boleto
 		// resultado do cálculo do digito verificador
 		$result = 11 - $somatorio%11;
 		// se o resultado for maior que 9 entã o digito é 0;
-		if ($result > 9 || $result = 0){
+		if ($result > 9 || $result == 0){
 			$result = 1;
 		}
 
