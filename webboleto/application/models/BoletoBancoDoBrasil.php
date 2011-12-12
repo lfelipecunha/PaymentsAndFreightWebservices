@@ -45,17 +45,18 @@ class Application_Model_BoletoBancoDoBrasil extends Application_Model_Boleto
 		$vars = array (
 			'barcode'          => $barcode,
 			'carteira'         => $this->carteira,
-			'codigo_banco'     => $this->_codigoBanco.'-'.$this->_modulo10($this->_codigoBanco),
-			'codigo_cedente'   => $this->codigo_cedente,
+			'codigo_banco'     => $this->_codigoBanco.'-'.$this->_modulo11($this->_codigoBanco,false),
+			'codigo_cedente'   => $this->codigo_cedente.'-'.$this->_modulo11($this->codigo_cedente,false),
+			'conta'            => $this->conta.'-'.$this->_modulo11($this->conta,false),
 			'data_hoje'        => date('d/m/Y'),
 			'especie'          => 'R$',
 			'linha_digitavel'  => $linha_digitavel,
 			'logo'             => base64_encode($logo),
 			'valor'            => number_format(($this->valor/100),2,',','.'),
 			'vencimento'       => $data->toString('dd/MM/Y'),
-			'nosso_numero'     => $this->_getNossoNumero().'-'.$this->_modulo11($this->_getNossoNumero()),
+			'nosso_numero'     => $this->_getNossoNumero(),
 			'numero_documento' => (int)$this->nosso_numero,
-			'agencia'          => $this->agencia.'-'.$this->_modulo11($this->agencia),
+			'agencia'          => $this->agencia.'-'.$this->_modulo11($this->agencia,false),
 		);
 		$vars += $this->_params;
 		return $vars;

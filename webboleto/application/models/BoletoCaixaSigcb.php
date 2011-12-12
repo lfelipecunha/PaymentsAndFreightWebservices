@@ -34,7 +34,7 @@ class Application_Model_BoletoCaixaSigcb extends Application_Model_Boleto
 		$vars = array (
 			'barcode'         => $barcode,
 			'carteira'        => 'SR',
-			'codigo_banco'    => $this->_codigoBanco.'-'.$this->_modulo10($this->_codigoBanco),
+			'codigo_banco'    => $this->_codigoBanco.'-'.$this->_modulo11($this->_codigoBanco,false),
 			'codigo_cedente'  => $this->codigo_cedente.'-'.$this->_modulo10($this->codigo_cedente),
 			'data_hoje'       => date('d/m/Y'),
 			'especie'         => 'R$',
@@ -45,7 +45,7 @@ class Application_Model_BoletoCaixaSigcb extends Application_Model_Boleto
 		);
 		$vars += $this->_params;
 		// adiciona o digito verificador para o campo nosso número
-		$vars['nosso_numero'] .= '-'.$this->_modulo11($vars['nosso_numero']);
+		$vars['nosso_numero'] .= '-'.$this->_modulo11($vars['nosso_numero'],false);
 		return $vars;
 	}
 
@@ -63,7 +63,7 @@ class Application_Model_BoletoCaixaSigcb extends Application_Model_Boleto
 
 		$campo_livre  = $codigo_cedente;
 		// digito verificador do código de cedente
-		$campo_livre .= $this->_modulo11($codigo_cedente);
+		$campo_livre .= $this->_modulo11($codigo_cedente,false);
 		// posições 3,4 e 5 do nosso número
 		$campo_livre .= substr($nosso_numero, 2,3);
 		// tipo de registro
@@ -75,7 +75,7 @@ class Application_Model_BoletoCaixaSigcb extends Application_Model_Boleto
 		// da posição 9 à posição 17 do nosso número
 		$campo_livre .= substr($nosso_numero, 8,9);
 		// dígito verificador do nosso número
-		$campo_livre .= $this->_modulo11($campo_livre);
+		$campo_livre .= $this->_modulo11($campo_livre,false);
 		return $campo_livre;
 	}
 

@@ -24,8 +24,8 @@ class Application_Model_BoletoSantander extends Application_Model_Boleto
 			'barcode'         => $barcode,
 			'linha_digitavel' => $linha_digitavel,
 			'logo'            => base64_encode($logo),
-			'codigo_banco'    => $this->_codigoBanco.'-'.$this->_modulo11($this->_codigoBanco),
-			'agencia'         => $this->agencia.'-'.$this->_modulo11($this->agencia),
+			'codigo_banco'    => $this->_codigoBanco.'-'.$this->_modulo11($this->_codigoBanco,false),
+			'agencia'         => $this->agencia.'-'.$this->_modulo11($this->agencia,false),
 			'nosso_numero'    => $nosso_numero,
 			'data_hoje'       => date('d/m/Y'),
 			'vencimento'      => $data->toString('dd/MM/YY'),
@@ -79,6 +79,6 @@ class Application_Model_BoletoSantander extends Application_Model_Boleto
 
 	protected function _getNossoNumero() {
 		$nosso_numero = str_pad((int)$this->nosso_numero,12,'0',STR_PAD_LEFT);
-		return $nosso_numero.$this->_modulo11($nosso_numero);
+		return $nosso_numero.$this->_modulo11($nosso_numero,false);
 	}
 }
