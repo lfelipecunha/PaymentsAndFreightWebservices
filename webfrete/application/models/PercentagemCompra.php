@@ -12,7 +12,7 @@ class Application_Model_PercentagemCompra implements Application_Model_Frete
 	 * @param array $opcao  Parâmetro com o valor adicional do frete
 	 */
 	public function __construct($params,$opcao) {
-		$this->_valor = $this->_calculaValor($params['valor_produtos'],$opcao['percentagem']);
+		$this->_valor = $this->_calculaValor($params['valor_produtos'],$opcao['percentagem'],$opcao['valor_maximo_frete']);
 		$this->_prazo = $opcao['prazo_entrega'];
 	}
 
@@ -24,8 +24,12 @@ class Application_Model_PercentagemCompra implements Application_Model_Frete
 	 *                            vírgula exemplo: para 6% -> 600
 	 * @return int Valor do frete em centavos
 	 */
-	private function _calculaValor($valor_produtos,$percentagem) {
-		return round($valor_produtos*$percentagem/10000);
+	private function _calculaValor($valor_produtos,$percentagem, $valor_maximo_frete) {
+		$valor_frete = round($valor_produtos*$percentagem/10000);
+		if (!empty($valor_maximo_frete) && $valor_frete > $valor_maximo_frete) {
+			$valor_frete = $valor_maximo_frete;
+		}
+		return $valor_frete;
 	}
 
 
