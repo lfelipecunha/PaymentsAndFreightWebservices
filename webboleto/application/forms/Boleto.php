@@ -30,6 +30,7 @@ class Application_Form_Boleto extends Zend_Form {
 			->addFilter($urldecode);
 		$this->addElement($cnpj);
 
+
 		// nosso número
 		$nosso_numero = new Zend_Form_Element('nosso_numero');
 		$nosso_numero
@@ -84,6 +85,13 @@ class Application_Form_Boleto extends Zend_Form {
 			->setRequired(true);
 		$this->addElement($cliente_uf);
 
+		// cpf do cliente
+		$cliente_cpf = new Zend_Form_Element('cliente_cpf');
+		$cliente_cpf
+			->setAllowEmpty(false)
+			->setRequired(true);
+		$this->addElement($cliente_cpf);
+
 		// Cidade do cliente
 		$cliente_cidade = new Zend_Form_Element('cliente_cidade');
 		$cliente_cidade
@@ -97,7 +105,7 @@ class Application_Form_Boleto extends Zend_Form {
 			->setAllowEmpty(true)
 			->setRequired(false);
 		$this->addElement($conta);
-		
+
 		$carteira = new Zend_Form_Element('carteira');
 		$carteira
 			->setAllowEmpty(true)
