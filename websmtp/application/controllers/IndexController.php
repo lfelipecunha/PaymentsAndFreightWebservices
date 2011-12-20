@@ -10,7 +10,7 @@ class IndexController extends Zend_Controller_Action
 
 	public function indexAction()
 	{
-		$form = new Application_Form_Template();
+		$form = new Application_Form_GroupTemplate();
 		$this->view->form = $form;
 	}
 
