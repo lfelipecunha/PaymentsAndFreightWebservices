@@ -1,7 +1,7 @@
 <?php
 /**
- * Classe de modelo reponsável pelas requisições com o webservice da JadoLog, 
- * também pelo tratamento de toda e qualquer informação para que estas 
+ * Classe de modelo reponsável pelas requisições com o webservice da JadoLog,
+ * também pelo tratamento de toda e qualquer informação para que estas
  * requisições sejam bem sucedidas
  *
  */
@@ -37,7 +37,7 @@ class Application_Model_JadLog implements Application_Model_Frete
 	}
 
 	/**
-	 * Método para modificação dos nomes dos parâmetros de acordo com o 
+	 * Método para modificação dos nomes dos parâmetros de acordo com o
 	 * específicado na documentação da JadLog
 	 *
 	 * @param array $params Parâmetros padrões
@@ -91,7 +91,7 @@ class Application_Model_JadLog implements Application_Model_Frete
 		// define o timeout para a conexão do serviço
 		$context = stream_context_create(array('http' => array('timeout' => 8)));
 		$old = ini_set('default_socket_timeout',8);
-		$soap_cliente->setStreamContext($context);
+		$soap_client->setStreamContext($context);
 
 		try {
 			// objeto com o resultado  da requisição do webservice
@@ -115,7 +115,7 @@ class Application_Model_JadLog implements Application_Model_Frete
 		if (count($valor_frete) > 1 ) {
 			// verifica se após a virgula tem somente uma casa decimal
 			if (strlen($valor_frete[1]) == 1) {
-				// adiciona um zero no final pois o numero pode vir com uma casa 
+				// adiciona um zero no final pois o numero pode vir com uma casa
 				// decimal
 				$valor_frete[1] .= 0;
 			}
