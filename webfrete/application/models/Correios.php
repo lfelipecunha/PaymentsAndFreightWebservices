@@ -21,7 +21,7 @@ class Application_Model_Correios implements Application_Model_Frete
 	protected $_caixas = array();
 
 	/**
-	 * Variável que tem padrão de valores a serem enviados ao webservice dos 
+	 * Variável que tem padrão de valores a serem enviados ao webservice dos
 	 * Correios
 	 * @var array
 	 */
@@ -51,12 +51,12 @@ class Application_Model_Correios implements Application_Model_Frete
 
 	/**
 	 * Método para parsemanto de informaçõe
-	 * 
+	 *
 	 * Este método pega os valores padrões dos parâmetros e modifica o nome dos
-	 * mesmos de acordo com os valores necessários para envio destes ao 
+	 * mesmos de acordo com os valores necessários para envio destes ao
 	 * webservice dos correios
 	 *
-	 * @param array $params Valores padrões para consulta 
+	 * @param array $params Valores padrões para consulta
 	 *                      vide a documentação
 	 */
 	protected function _parseParams($params) {
@@ -73,8 +73,8 @@ class Application_Model_Correios implements Application_Model_Frete
 
 			// laço para pegar os valores padrões de parametros
 			foreach ($this->_params as &$value) {
-				// para cada valor do atributo de parametros existe parametro 
-				// uma chave no array de parametros passado, este valor é 
+				// para cada valor do atributo de parametros existe parametro
+				// uma chave no array de parametros passado, este valor é
 				// assumido pelo elemento do array
 				$value = $params[$value];
 			}
@@ -88,9 +88,9 @@ class Application_Model_Correios implements Application_Model_Frete
 	/**
 	 * Método para inserção de produtos nas caixas
 	 *
-	 * Este método verifica se as dimensões e peso do produto estão de acordo 
+	 * Este método verifica se as dimensões e peso do produto estão de acordo
 	 * com o préestabelecido pelos correios, caso contrário lança um Exception
-	 * 
+	 *
 	 * @param array $produtos Produtos a serem inseridos
 	 */
 	protected function _setProdutos($produtos) {
@@ -104,7 +104,7 @@ class Application_Model_Correios implements Application_Model_Frete
 	/**
 	 * Método para realizar consulta com o webservice dos Correios
 	 *
-	 * Este método realiza tantas requisições quantas caixas de produtos 
+	 * Este método realiza tantas requisições quantas caixas de produtos
 	 * existirem.
 	 *
 	 * @return array Valor e Prazo do frete
@@ -112,7 +112,7 @@ class Application_Model_Correios implements Application_Model_Frete
 	public function consulta() {
 		// instância do Soap Client
 		$soap_cliente = new Zend_Soap_Client('http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx?WSDL');
-		// seta a versão do Soap para 1.1 devido o webservice dos correios 
+		// seta a versão do Soap para 1.1 devido o webservice dos correios
 		// funcionar somente com esta versão
 		$soap_cliente->setSoapVersion(SOAP_1_1);
 		// define o timeout para a conexão do serviço
@@ -147,7 +147,7 @@ class Application_Model_Correios implements Application_Model_Frete
 					$result['valor'] += (int)(str_replace(',','',(string)$valores->Valor));
 					// pega o prazo de entrega
 					$prazo = (int)$valores->PrazoEntrega;
-					// seta sempre o maior prazo de entrega no prazo de entrega 
+					// seta sempre o maior prazo de entrega no prazo de entrega
 					// total
 					if ($result['prazo'] < $prazo) {
 						$result['prazo'] = $prazo;
@@ -158,6 +158,10 @@ class Application_Model_Correios implements Application_Model_Frete
 					// se houve erro na requisição lança uma excessão
 					throw new F1S_Basket_Freight_FreightErrorException('',102);
 				}
+				if ($result['valor'] <= 1) {
+					throw new SoapFault('1','Valor Invalido');
+				}
+
 			} catch (SoapFault $sp){ // caso tenha ocorrido algum erro de comunicação com o servidor dos correios
 				// inicializa o peso
 				$peso = 0;
@@ -184,17 +188,17 @@ class Application_Model_Correios implements Application_Model_Frete
 						// faz um calculo para pegar o valor referente ao peso
 						$result['valor'] = (int)($peso/8000*$valores[0]['valor']);
 					} else {
-						// se o peso das caixas é inferior ou igual a 8kg seta o 
+						// se o peso das caixas é inferior ou igual a 8kg seta o
 						// valor da tabela de contingência
 						$result['valor'] = $valores[0]['valor'];
-					} 
-					// seta o erro igual 999 que indica que os dados vieram de uma 
+					}
+					// seta o erro igual 999 que indica que os dados vieram de uma
 					// contingência
 					$result['erro'] = 999;
 				} else { // se não existir contingência
 					throw new F1S_Basket_Freight_FreightErrorException('',102);
 				}
-				// interrompe o laço de calculo pois se não houve comunicação 
+				// interrompe o laço de calculo pois se não houve comunicação
 				//com os correios o valor não deve realizar o processo novamente
 				break;
 			}
