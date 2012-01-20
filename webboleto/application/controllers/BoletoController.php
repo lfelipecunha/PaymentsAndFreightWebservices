@@ -70,11 +70,24 @@ class BoletoController extends Zend_Controller_Action {
 				} else {
 					$static = false;
 				}
-				$parmas_boleto = $boleto->getParams($boleto_nome,$static);
+				$version = 1;
+				if (!empty($params['version'])) {
+					$version = (int)$params['version'];
+				}
+				$parmas_boleto = $boleto->getParams($boleto_nome,$static,$version);
 				$xml->addChild('errors',0);
 				$i = 1;
-				foreach ($parmas_boleto as $param){
-					$parametros->addChild('parmametro_'.$i++,$param);
+				foreach ($parmas_boleto as $param) {
+					if (!is_array($param)) {
+						$parametros->addChild('parmametro_'.$i++,$param);
+					} else {
+						$aux = $parametros->addChild('parmametro_'.$i++);
+						foreach ($param as $key => $value) {
+							if (!empty($value)) {
+								$aux->addChild($key,utf8_encode($value));
+							}
+						}
+					}
 				}
 			} else if(isset($params['lista_boletos'])){
 				$result = $boleto->getBoletosDisponiveis();
