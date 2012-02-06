@@ -13,7 +13,7 @@
  * @subpackage Freight
  */
 class F1S_Basket_Freight_Packer {
-	
+
 	/**
 	 * Instância Singleton
 	 * @var F1S_Basket_Freight_Packer
@@ -33,7 +33,7 @@ class F1S_Basket_Freight_Packer {
 
 	/**
 	 * Acesso Singleton
-	 * 
+	 *
 	 * Ponto de acesso único ao empacotador de elementos dentro do sistema.
 	 * Somente um objeto do tipo empacotador pode ser instanciado e todos os
 	 * elementos serão gerenciados por ele.
@@ -54,7 +54,7 @@ class F1S_Basket_Freight_Packer {
 	 * Método para alocar um produto em uma caixa.
 	 *
 	 * Este método verifica se o produto pode ser inserido em uma caixa já
-	 * existente. 
+	 * existente.
 	 * Se não existir nenhuma caixa ou as caixas existentes não comportarem este
 	 * produto, o mesmo é alocado em uma nova caixa.
 	 *
@@ -62,8 +62,8 @@ class F1S_Basket_Freight_Packer {
 	 * produto é inserido em uma caixa que já contenha um produto, esta caixa
 	 * recebe a soma dos valores dos lados (comprimento, largura ou altura) da
 	 * caixa e do produto dependendo da posição em que o produto foi colocado, e
-	 * para as demais dimensões são realizadas comparações para verificação de 
-	 * qual é a maior e a caixa recebe o maior valor, permanecendo assim no 
+	 * para as demais dimensões são realizadas comparações para verificação de
+	 * qual é a maior e a caixa recebe o maior valor, permanecendo assim no
 	 * formato de  paralelepipedo.
 	 *
 	 * @param array $produto Produto contendo o as dimensões, quantidade e peso
@@ -93,7 +93,7 @@ class F1S_Basket_Freight_Packer {
 				foreach($aux_produto as $key => $value) {
 					// laço para cada caixa existente
 					foreach ($this->_caixas as &$caixa) {
-						// verifica se o peso da caixa com o novo produto é 
+						// verifica se o peso da caixa com o novo produto é
 						// inferior ou igual a 30kg
 						if (($caixa['peso']+$produto['peso']) <= 30000) {
 							// calcula a soma das arestas do conteúdo da caixa
@@ -114,8 +114,8 @@ class F1S_Basket_Freight_Packer {
 											// atualiza o tamanho do lado
 											$caixa[$indice] = $total_lado;
 										} else {
-											// se o lado do produto for maior 
-											// que o lado da caixa, a caixa 
+											// se o lado do produto for maior
+											// que o lado da caixa, a caixa
 											// passa ter o tamanho do produto
 											if ($aux_produto[$indice] > $valor) {
 												$caixa[$indice] = $aux_produto[$indice];
@@ -135,9 +135,13 @@ class F1S_Basket_Freight_Packer {
 							break;
 						}
 					}
+					// se o produto foi adicionado sai do laço de caixas
+					if ($flag) {
+						break;
+					}
 				}
 
-				// verifica se o produto foi adicionado em uma caixa já 
+				// verifica se o produto foi adicionado em uma caixa já
 				// existente, caso não tenha sido alocado,
 				// aloca em um nova caixa.
 				if (!$flag) {
@@ -157,8 +161,8 @@ class F1S_Basket_Freight_Packer {
 		if (empty($this->_caixas)) {
 			// laço para cada produto
 			foreach ($produtos as $produto) {
-				// se uma dimensão for maior que 90cm ou se a soma das arestas 
-				// for maior que 160cm é lançada uma Exception pois este produto 
+				// se uma dimensão for maior que 90cm ou se a soma das arestas
+				// for maior que 160cm é lançada uma Exception pois este produto
 				// não pode ser enviado pelos correios.
 				if ($produto['largura']    > 90 ||
 					$produto['altura']     > 90 ||
@@ -166,7 +170,7 @@ class F1S_Basket_Freight_Packer {
 					$produto['largura']+$produto['comprimento']+$produto['altura'] > 160 ||
 					$produto['peso'] > 30000
 					) {
-					// esvazia as caixas para que não ocorra o envio de outras 
+					// esvazia as caixas para que não ocorra o envio de outras
 					// formas de entrega que dependem das condições de tamanho
 					$this->_caixas = array();
 					throw new F1S_Basket_Freight_FreightErrorException('', 103);
@@ -180,7 +184,7 @@ class F1S_Basket_Freight_Packer {
 	}
 
 	/**
-	 * Valida as dimensões das caixas para se adequar as regras de empacotemento 
+	 * Valida as dimensões das caixas para se adequar as regras de empacotemento
 	 * dos correios.
 	 *
 	 * Este método modifica diretamente o atributo $_caixas
