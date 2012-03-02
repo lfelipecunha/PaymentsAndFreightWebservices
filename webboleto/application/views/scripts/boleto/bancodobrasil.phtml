@@ -105,15 +105,19 @@
 				<td colspan="7" class="linha_digitavel"><?php echo $this->vars['linha_digitavel'] ?></td>
 			</tr>
 			<tr>
-				<td colspan="3">
+				<td colspan="10">
 					<span>Cedente</span>
-					<?php echo $this->vars['nome_cedente'] ?>
+					<strong><?php echo $this->vars['nome_cedente'] ?></strong><br/>
+					CPF/CNPJ: <?php echo $this->vars['cnpj_cedente']?><br/>
+					Endereço: <?php echo $this->vars['endereco_cedente']?><br/>
 				</td>
+			</tr>
+			<tr>
 				<td colspan="5">
 					<span>Agência/Código Cedente</span>
 					<?php echo $this->vars['agencia'].' / '.$this->vars['conta']?>
 				</td>
-				<td>
+				<td colspan="4">
 					<span>Espécie</span>
 					<?php echo $this->vars['especie'] ?>
 				</td>
@@ -156,6 +160,8 @@
 					<?php echo $this->vars['cliente_endereco']?><br/>
 					<?php echo $this->vars['cliente_cidade']?> - <?php echo $this->vars['cliente_uf']?> - CEP:<?php echo $this->vars['cliente_cep']?>
 				</td>
+			</tr>
+			<tr>
 			</tr>
 		</table>
 <div class="cortar">Corte aqui</div>
@@ -245,7 +251,7 @@
 					<p>Atenção Sr(a). Cliente:</p>
 					<p>O pedido ficará pendente até; que este boleto seja pago.</p>
 					<p>Não confunda pagamento com agendamento, pague o boleto com a data do próprio dia.</p>
-				
+
 				</td>
 				<td class="direita"><span>(-) Desconto / Abatimentos</span></td>
 			</tr>

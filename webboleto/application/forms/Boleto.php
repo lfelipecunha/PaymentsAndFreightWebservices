@@ -128,5 +128,8 @@ class Application_Form_Boleto extends Zend_Form {
 			->addValidator(new Zend_Validate_InArray($boletos))
 			->setRequired();
 		$this->addElement($tipo_boleto);
+
+		$endereco_cedente = new Zend_Form_Element('endereco_cedente');
+		$this->addElement($endereco_cedente);
 	}
 }
