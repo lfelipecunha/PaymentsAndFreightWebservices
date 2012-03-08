@@ -13,6 +13,12 @@ class Application_Model_RetiraNaLoja implements Application_Model_Frete
 	protected $_valor = 0;
 
 	/**
+	 * Prazo de entrega
+	 * @var int
+	 */
+	 protected $_prazo = 0;
+
+	/**
 	 * Construtor da classe
 	 *
 	 * @param mixed $params Parâmetro obrigatório mas não utilizado
@@ -22,7 +28,11 @@ class Application_Model_RetiraNaLoja implements Application_Model_Frete
 		// se o valor adicional estiver setado seta o valor do frete com este
 		// valor
 		if (!empty($opcao['valor_servico_adicional'])) {
-			$this->_valor = $opcao['valor_servico_adicional'];
+			$this->_valor = (int)$opcao['valor_servico_adicional'];
+		}
+
+		if (!empty($opcao['prazo_entrega'])) {
+			$this->_prazo = (int)$opcao['prazo_entrega'];
 		}
 	}
 
@@ -33,7 +43,7 @@ class Application_Model_RetiraNaLoja implements Application_Model_Frete
 	 */
 	public function consulta() {
 		return array(
-			'prazo' => 0,
+			'prazo' => $this->_prazo,
 			'valor' => $this->_valor,
 			'erro'  => 0,
 		);
