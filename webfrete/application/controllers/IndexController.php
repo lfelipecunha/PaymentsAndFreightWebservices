@@ -12,6 +12,10 @@ class IndexController extends Zend_Controller_Action
 		if ($this->getRequest()->isPost()) { // se houve envio
 			// pega os dados do POST
 			$params = $this->getRequest()->getPost();
+		} else if($this->getRequest()->isGet()) {
+			$params = $this->getRequest()->getQuery();
+		}
+if (!empty($params)) {
 			// instância do Modelo de validação de dados padrões
 			$validate = new Application_Model_Validate($params);
 			// pega os dados validados. Neste ponto podem ser lançadas exceções
