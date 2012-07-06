@@ -152,12 +152,43 @@ class F1S_Basket_Freight_Packer {
 	}
 
 	/**
+	 * Método para realizar ordenação para facilitar o empacotamento
+	 *
+	 * @param array $produtos Produtos para ordenação
+	 * @return array Produtos Ordenados
+	 */
+	private function _ordenaProdutos($produtos) {
+		$func = function($a,$b) {
+			$volumeA = $a['altura'] * $a['largura'] *$a['comprimento'];
+			$volumeB = $b['altura'] * $b['largura'] *$b['comprimento'];
+			if ($volumeA > $volumeB) {
+				$result = 1;
+			} elseif ($volumeB > $volumeA) {
+				$result = 1;
+			} else {
+				$result = 0;
+				if ($a['peso'] > $b['peso']) {
+					$result = -1;
+				} elseif($a['peso'] < $b['peso']){
+					$result = 1;
+				}
+			}
+			return $result;
+		};
+		uasort($produtos,$func);
+		return $produtos;
+	}
+
+	/**
 	 * Método para devolver as caixas já montadas
 	 *
 	 * @param array $produto Array com as dimensões e peso do produto
 	 * @return array Caixas com os produtos
 	 */
 	public function getCaixas($produtos) {
+		// ordernação dos produtos para facilitar a verificação e o cálculo
+		$produtos = $this->_ordenaProdutos($produtos);
+
 		if (empty($this->_caixas)) {
 			// laço para cada produto
 			foreach ($produtos as $produto) {
