@@ -80,7 +80,7 @@ abstract class Application_Model_Boleto
 	 * @param string $numero Número para cálculo do dígito
 	 * @return int Dígito Verificador
 	 */
-	protected function _modulo11($numero, $not_zero = true) {
+	protected function _modulo11($numero, $not_zero = true,$withX = false) {
 		// transfora a string em um array
 		$numeros = str_split($numero);
 		// variavel para multiplicação
@@ -103,7 +103,11 @@ abstract class Application_Model_Boleto
 		$result = 11 - $somatorio%11;
 		// se o resultado for maior que 9 entã o digito é 0;
 		if ($result > 9) {
-			$result = 0;
+			if ($withX && $result == 10) {
+				$result = 'x';
+			} else {
+				$result = 0;
+			}
 		}
 
 		if ($result == 0 && $not_zero) {

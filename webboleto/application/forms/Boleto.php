@@ -62,6 +62,12 @@ class Application_Form_Boleto extends Zend_Form {
 			->setRequired(true);
 		$this->addElement($agencia);
 
+		// agencia
+		$agencia_digito = new Zend_Form_Element('agencia_digito');
+		$agencia_digito
+			->setRequired(false);
+		$this->addElement($agencia_digito);
+
 		// endereço do cliente
 		$cliente_endereco = new Zend_Form_Element('cliente_endereco');
 		$cliente_endereco
@@ -111,6 +117,12 @@ class Application_Form_Boleto extends Zend_Form {
 			->setAllowEmpty(true)
 			->setRequired(false);
 		$this->addElement($carteira);
+
+		$variacao_carteira = new Zend_Form_Element('variacao_carteira');
+		$variacao_carteira
+			->setAllowEmpty(true)
+			->setRequired(false);
+		$this->addElement($variacao_carteira);
 
 		// cep do cliente
 		$cliente_cep = new Zend_Form_Element('cliente_cep');

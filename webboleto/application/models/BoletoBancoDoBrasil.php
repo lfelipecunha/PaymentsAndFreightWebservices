@@ -41,10 +41,15 @@ class Application_Model_BoletoBancoDoBrasil extends Application_Model_Boleto
 		// pega o logo do banco
 		$logo = file_get_contents(APPLICATION_PATH.'/../public/img/logo-bb.jpg');
 
+		if (isset($this->agencia_digito)) {
+			$agencia_digito = $this->agencia_digito[0];
+		} else {
+			$agencia_digito = $this->_modulo11($this->agencia,false,true);
+		}
+
 		// variáveis para a camada de visualização
 		$vars = array (
 			'barcode'          => $barcode,
-			'carteira'         => $this->carteira,
 			'codigo_banco'     => $this->_codigoBanco.'-'.$this->_modulo11($this->_codigoBanco,false),
 			'codigo_cedente'   => $this->codigo_cedente.'-'.$this->_modulo11($this->codigo_cedente,false),
 			'conta'            => $this->conta.'-'.$this->_modulo11($this->conta,false),
@@ -56,7 +61,7 @@ class Application_Model_BoletoBancoDoBrasil extends Application_Model_Boleto
 			'vencimento'       => $data->toString('dd/MM/Y'),
 			'nosso_numero'     => $this->_getNossoNumero(),
 			'numero_documento' => (int)$this->nosso_numero,
-			'agencia'          => $this->agencia.'-'.$this->_modulo11($this->agencia,false),
+			'agencia'          => $this->agencia.'-'.$agencia_digito,
 		);
 		$vars += $this->_params;
 		return $vars;
@@ -125,15 +130,15 @@ class Application_Model_BoletoBancoDoBrasil extends Application_Model_Boleto
 	 * @return string Nosso Número
 	 */
 	protected function _getNossoNumero() {
-		$convenio_lenght = strlen($this->codigo_cedente);
-		switch ($convenio_lenght) {
+		$convenio_length = strlen($this->codigo_cedente);
+		switch ($convenio_length) {
 			case 4:
 			case 6:
-				$padding = 11 - $convenio_lenght;
+				$padding = 11 - $convenio_length;
 				break;
 			case 7:
 			case 8:
-				$padding = 17 - $convenio_lenght;
+				$padding = 17 - $convenio_length;
 		}
 		$nosso_numero = $this->codigo_cedente . str_pad((int)$this->nosso_numero,$padding,0,STR_PAD_LEFT);
 		return $nosso_numero;
