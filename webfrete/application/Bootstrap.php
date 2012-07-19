@@ -10,7 +10,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 				} else {
 					$message = 'Ocorreu um erro no servidor! Em breve o servidor estará em funcionamento! Desculpe o transtorno!';
 				}
-				throw new F1S_Basket_Freight_FatalErrorException($message);
+				if ($error_type != E_WARNING) {
+					throw new F1S_Basket_Freight_FatalErrorException($message);
+				}
 			});
 	}
 }
