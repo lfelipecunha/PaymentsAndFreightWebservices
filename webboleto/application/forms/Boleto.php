@@ -143,5 +143,10 @@ class Application_Form_Boleto extends Zend_Form {
 
 		$endereco_cedente = new Zend_Form_Element('endereco_cedente');
 		$this->addElement($endereco_cedente);
+
+		$instrucao_boleto = new Zend_Form_Element('instrucao_boleto');
+		$instrucao_boleto
+			->setRequired(false);
+		$this->addElement($instrucao_boleto);
 	}
 }

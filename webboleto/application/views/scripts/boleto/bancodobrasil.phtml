@@ -247,7 +247,15 @@
 			<tr>
 				<td rowspan="5" colspan="9" class="instrucoes">
 					<span>Instruções:</span>
-					<p><strong>Não receber após a data de vencimento.</strong></p>
+					<p>
+						<strong>
+<?php if (empty($this->vars['instrucao_boleto'])) : ?>
+							Não receber após a data de vencimento.
+<?php else : ?>
+							<?php echo $this->vars['instrucao_boleto'] ?>
+<?php endif ?>
+						</strong>
+					</p>
 					<p>Atenção Sr(a). Cliente:</p>
 					<p>O pedido ficará pendente até; que este boleto seja pago.</p>
 					<p>Não confunda pagamento com agendamento, pague o boleto com a data do próprio dia.</p>
