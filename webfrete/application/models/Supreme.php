@@ -653,7 +653,7 @@ class Application_Model_Supreme implements Application_Model_Frete
                 foreach ($states as $state) {
                     if ($cep >= $state['cep_inicio'] && $cep <= $state['cep_fim']) {
                         return true;
-                    } else if (!empty($state['cep_inicio2']) && $cep >= $state['cep_inicio2'] && $cep <= $state['cep_fim2']) {
+                    } else if (!empty($state['cep_inicio2']) && !empty($state['cep_fim2']) && $cep >= $state['cep_inicio2'] && $cep <= $state['cep_fim2']) {
                         return true;
                     }
                 }
