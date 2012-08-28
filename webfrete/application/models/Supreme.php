@@ -641,10 +641,13 @@ class Application_Model_Supreme implements Application_Model_Frete
 
 
 	private function _isFreteGratis($produtos,$valor_produtos,$cep) {
+        if ($valor_produtos < 80000) {
+            return false;
+        }
 /*		if (($this->_isRegiaoSul($cep_destino) || $this->_isRegiaoSudeste($cep_destino)) && $valor_produtos > 50000) {
 			return true;
 		}*/
-        $states = array('DF', 'ES', 'GO', 'PR', 'RJ', 'SC', 'SP', 'MG', 'BA');
+        $states = array('DF', 'ES', 'GO', 'PR', 'RJ', 'RS', 'SC', 'SP', 'MG', 'BA');
         $table = new Application_Model_DbTable_Estados();
         $select = $table->select()->where('sigla IN(?)',$states);
         $states = $table->fetchAll($select);
