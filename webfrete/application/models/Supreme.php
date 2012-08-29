@@ -652,7 +652,7 @@ class Application_Model_Supreme implements Application_Model_Frete
         $select = $table->select()->where('sigla IN(?)',$states);
         $states = $table->fetchAll($select);
 		foreach ($produtos as $produto) {
-			if ($produto['departamento'] == 22 || $produto['departamento'] == 25 || $produto['categoria'] == 53 || $produto['categoria'] == 29 || $produto['categoria'] == 40) {
+			//if ($produto['departamento'] == 22 || $produto['departamento'] == 25 || $produto['categoria'] == 53 || $produto['categoria'] == 29 || $produto['categoria'] == 40) {
                 foreach ($states as $state) {
                     if ($cep >= $state['cep_inicio'] && $cep <= $state['cep_fim']) {
                         return true;
@@ -660,7 +660,7 @@ class Application_Model_Supreme implements Application_Model_Frete
                         return true;
                     }
                 }
-			}
+			//}
 		}
 		return false;
 	}
