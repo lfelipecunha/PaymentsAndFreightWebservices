@@ -117,8 +117,8 @@ class F1S_Basket_Freight_Packer {
 											// se o lado do produto for maior
 											// que o lado da caixa, a caixa
 											// passa ter o tamanho do produto
-											if ($aux_produto[$indice] > $valor) {
-												$caixa[$indice] = $aux_produto[$indice];
+											if ($caixa[$indice] < $valor) {
+												$caixa[$indice] = $valor;
 											}
 										}
 									}
