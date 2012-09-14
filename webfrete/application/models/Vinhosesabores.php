@@ -133,9 +133,15 @@ class Application_Model_VinhosESabores implements Application_Model_Frete
 				250 => 75,
 				300 => 90,
 				350 => 130,
+                400 => 150,
+                450 => 170,
+                500 => 200,
+                550 => 250,
+                600 => 290,
 			),
 			'prazo' => 7,
 		),
+
 		'Minas Gerais - Interior ' =>
 		array (
 			'ini' => '32000000',
@@ -150,6 +156,11 @@ class Application_Model_VinhosESabores implements Application_Model_Frete
 				250 => 90,
 				300 => 90,
 				350 => 140,
+                400 => 175,
+                450 => 195,
+                500 => 220,
+                550 => 290,
+                600 => 310,
 			),
 			'prazo' => 10,
 		),
