@@ -110,7 +110,7 @@ class Application_Model_BoletoBancoDoBrasil extends Application_Model_Boleto
 		$codigo_cedente = $this->codigo_cedente;
 		$nosso_numero = $this->_getNossoNumero();
 		if (strlen($nosso_numero) == 11) {
-			$nosso_numero = $codigo_cedente.$nosso_numero.$this->agencia;
+			$nosso_numero = $nosso_numero.$this->agencia.str_pad((int)$this->conta,8,0,STR_PAD_LEFT);
 		} else {
 			$nosso_numero = '000000'.$nosso_numero;
 		}
