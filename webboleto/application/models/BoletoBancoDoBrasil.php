@@ -8,6 +8,8 @@ class Application_Model_BoletoBancoDoBrasil extends Application_Model_Boleto
 	 */
 	protected $_codigoBanco = '001';
 
+    protected $_nossoNumeroComDV = false;
+
 	/**
 	 * Construtor da classe.
 	 * Este método passa os parâmetros recebidos para o método _init() da classe
@@ -47,6 +49,11 @@ class Application_Model_BoletoBancoDoBrasil extends Application_Model_Boleto
 			$agencia_digito = $this->_modulo11($this->agencia,false,true);
 		}
 
+        $nosso_numero = $this->_getNossoNumero();
+        if ($this->_nossoNumeroComDV) {
+            $nosso_numero .= '-'.$this->_modulo11($nosso_numero);
+        }
+
 		// variáveis para a camada de visualização
 		$vars = array (
 			'barcode'          => $barcode,
@@ -59,7 +66,7 @@ class Application_Model_BoletoBancoDoBrasil extends Application_Model_Boleto
 			'logo'             => base64_encode($logo),
 			'valor'            => number_format(($this->valor/100),2,',','.'),
 			'vencimento'       => $data->toString('dd/MM/Y'),
-			'nosso_numero'     => $this->_getNossoNumero(),
+			'nosso_numero'     => $nosso_numero,
 			'numero_documento' => (int)$this->nosso_numero,
 			'agencia'          => $this->agencia.'-'.$agencia_digito,
 		);
@@ -135,6 +142,7 @@ class Application_Model_BoletoBancoDoBrasil extends Application_Model_Boleto
 			case 4:
 			case 6:
 				$padding = 11 - $convenio_length;
+                $this->_nossoNumeroComDV = true;
 				break;
 			case 7:
 			case 8:
