@@ -5,22 +5,7 @@ class Application_Model_Supreme implements Application_Model_Frete
 	private $_params = null;
 
 	private function _getFaixas() {
-		return
-        array (
-          'Rondonia - Guajara-Mirim' =>
-          array (
-            'ini' => '76850000',
-            'end' => '76850000',
-            'opcoes' =>
-            array (
-              10 => 52.57,
-              20 => 84.33,
-              30 => 300,
-              50 => 350,
-              100 => 500,
-            ),
-            'prazo' => 14,
-          ),
+		return array (
           'Rondonia - Estado' =>
           array (
             'ini' => '76800000',
@@ -35,17 +20,31 @@ class Application_Model_Supreme implements Application_Model_Frete
             ),
             'prazo' => 9,
           ),
+          'Rondonia - Guajara-Mirim' =>
+          array (
+            'ini' => '76850000',
+            'end' => '76850000',
+            'opcoes' =>
+            array (
+              10 => 52,
+              20 => 84,
+              30 => 300,
+              50 => 350,
+              100 => 500,
+            ),
+            'prazo' => 14,
+          ),
           'Bahia - Capital' =>
           array (
             'ini' => '40000001',
             'end' => '42499999',
             'opcoes' =>
             array (
-              10 => 37.98,
-              20 => 51.33,
-              30 => 60.46,
-              50 => 75.15,
-              100 => 115.48,
+              10 => 37,
+              20 => 51,
+              30 => 60,
+              50 => 75,
+              100 => 115,
             ),
             'prazo' => 6,
           ),
@@ -69,11 +68,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '77249999',
             'opcoes' =>
             array (
-              10 => 34.24,
-              20 => 65.01,
-              30 => 75.44,
-              50 => 114.56,
-              100 => 185.55,
+              10 => 34,
+              20 => 65,
+              30 => 75,
+              50 => 114,
+              100 => 185,
             ),
             'prazo' => 7,
           ),
@@ -83,11 +82,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '77999999',
             'opcoes' =>
             array (
-              10 => 59.33,
-              20 => 77.1,
-              30 => 96.53,
-              50 => 174.52,
-              100 => 224.65,
+              10 => 59,
+              20 => 77,
+              30 => 96,
+              50 => 174,
+              100 => 224,
             ),
             'prazo' => 11,
           ),
@@ -97,11 +96,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '77999100',
             'opcoes' =>
             array (
-              10 => 85.67,
-              20 => 93.43,
-              30 => 112.86,
-              50 => 126.38,
-              100 => 247.74,
+              10 => 85,
+              20 => 93,
+              30 => 112,
+              50 => 126,
+              100 => 247,
             ),
             'prazo' => 11,
           ),
@@ -111,11 +110,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '74899999',
             'opcoes' =>
             array (
-              10 => 36.45,
-              20 => 45.07,
-              30 => 66.62,
-              50 => 80.88,
-              100 => 112.74,
+              10 => 36,
+              20 => 45,
+              30 => 66,
+              50 => 80,
+              100 => 112,
             ),
             'prazo' => 5,
           ),
@@ -125,11 +124,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '76799999',
             'opcoes' =>
             array (
-              10 => 48.54,
-              20 => 56.31,
-              30 => 83.91,
-              50 => 114.75,
-              100 => 184.52,
+              10 => 48,
+              20 => 56,
+              30 => 83,
+              50 => 114,
+              100 => 184,
             ),
             'prazo' => 8,
           ),
@@ -139,11 +138,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '72799999',
             'opcoes' =>
             array (
-              10 => 36.69,
-              20 => 45.46,
-              30 => 67.4,
-              50 => 82.34,
-              100 => 112.25,
+              10 => 36,
+              20 => 45,
+              30 => 67,
+              50 => 82,
+              100 => 112,
             ),
             'prazo' => 5,
           ),
@@ -153,11 +152,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '73699999',
             'opcoes' =>
             array (
-              10 => 45.8,
-              20 => 53.74,
-              30 => 70.71,
-              50 => 90.24,
-              100 => 136.85,
+              10 => 45,
+              20 => 53,
+              30 => 70,
+              50 => 90,
+              100 => 136,
             ),
             'prazo' => 5,
           ),
@@ -168,10 +167,10 @@ class Application_Model_Supreme implements Application_Model_Frete
             'opcoes' =>
             array (
               10 => 75,
-              20 => 45.07,
-              30 => 66.62,
-              50 => 78.56,
-              100 => 158.45,
+              20 => 45,
+              30 => 66,
+              50 => 78,
+              100 => 158,
             ),
             'prazo' => 6,
           ),
@@ -181,13 +180,69 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '78899999',
             'opcoes' =>
             array (
-              10 => 63.99,
-              20 => 77.1,
-              30 => 109.89,
-              50 => 178.52,
-              100 => 195.85,
+              10 => 63,
+              20 => 77,
+              30 => 109,
+              50 => 178,
+              100 => 195,
             ),
             'prazo' => 12,
+          ),
+          'Amapá - Capital' =>
+          array (
+            'ini' => '68900001',
+            'end' => '68911999',
+            'opcoes' =>
+            array (
+              10 => 89,
+              20 => 107,
+              30 => 145,
+              50 => 195,
+              100 => 278,
+            ),
+            'prazo' => 12,
+          ),
+          'Amapá - Interior' =>
+          array (
+            'ini' => '68912000',
+            'end' => '68999999',
+            'opcoes' =>
+            array (
+              10 => 89,
+              20 => 107,
+              30 => 145,
+              50 => 195,
+              100 => 278,
+            ),
+            'prazo' => 15,
+          ),
+          'Amazonas - Capital' =>
+          array (
+            'ini' => '69000001',
+            'end' => '69099999',
+            'opcoes' =>
+            array (
+              10 => 105,
+              20 => 225,
+              30 => 295,
+              50 => 301,
+              100 => 397,
+            ),
+            'prazo' => 15,
+          ),
+          'Amazonas - ZN/INT' =>
+          array (
+            'ini' => '69100000',
+            'end' => '69299999',
+            'opcoes' =>
+            array (
+              10 => 226,
+              20 => 301,
+              30 => 375,
+              50 => 408,
+              100 => 527,
+            ),
+            'prazo' => 22,
           ),
           'Mato Grosso Sul - Capital ' =>
           array (
@@ -196,10 +251,10 @@ class Application_Model_Supreme implements Application_Model_Frete
             'opcoes' =>
             array (
               10 => 53,
-              20 => 42.74,
-              30 => 61.96,
-              50 => 88.45,
-              100 => 128.74,
+              20 => 42,
+              30 => 61,
+              50 => 88,
+              100 => 128,
             ),
             'prazo' => 5,
           ),
@@ -209,11 +264,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '79999999',
             'opcoes' =>
             array (
-              10 => 56.79,
-              20 => 68.09,
-              30 => 96.32,
-              50 => 134.86,
-              100 => 168.44,
+              10 => 56,
+              20 => 68,
+              30 => 96,
+              50 => 134,
+              100 => 168,
             ),
             'prazo' => 8,
           ),
@@ -223,11 +278,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '31999999',
             'opcoes' =>
             array (
-              10 => 35.29,
-              20 => 43.13,
-              30 => 62.73,
-              50 => 82.42,
-              100 => 112.61,
+              10 => 35,
+              20 => 43,
+              30 => 62,
+              50 => 82,
+              100 => 112,
             ),
             'prazo' => 5,
           ),
@@ -237,13 +292,41 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '39999100',
             'opcoes' =>
             array (
-              10 => 50.35,
-              20 => 57.34,
-              30 => 74.82,
-              50 => 89.65,
-              100 => 116.82,
+              10 => 50,
+              20 => 57,
+              30 => 74,
+              50 => 89,
+              100 => 116,
             ),
             'prazo' => 7,
+          ),
+          'Roraima - Capital' =>
+          array (
+            'ini' => '76800001',
+            'end' => '76834999',
+            'opcoes' =>
+            array (
+              10 => 74,
+              20 => 101,
+              30 => 124,
+              50 => 198,
+              100 => 204,
+            ),
+            'prazo' => 10,
+          ),
+          'Roraima - Interior' =>
+          array (
+            'ini' => '76835000',
+            'end' => '76999999',
+            'opcoes' =>
+            array (
+              10 => 87,
+              20 => 127,
+              30 => 168,
+              50 => 247,
+              100 => 289,
+            ),
+            'prazo' => 14,
           ),
           'Espírito Santo - Capital' =>
           array (
@@ -251,11 +334,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '29099999',
             'opcoes' =>
             array (
-              10 => 37.39,
-              20 => 46.63,
-              30 => 69.73,
-              50 => 79.52,
-              100 => 102.85,
+              10 => 37,
+              20 => 46,
+              30 => 69,
+              50 => 79,
+              100 => 102,
             ),
             'prazo' => 5,
           ),
@@ -265,11 +348,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '29999999',
             'opcoes' =>
             array (
-              10 => 39.31,
-              20 => 48.85,
-              30 => 72.7,
-              50 => 84.77,
-              100 => 107.91,
+              10 => 39,
+              20 => 48,
+              30 => 72,
+              50 => 84,
+              100 => 107,
             ),
             'prazo' => 5,
           ),
@@ -279,53 +362,53 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '29999100',
             'opcoes' =>
             array (
-              10 => 51.85,
-              20 => 63.81,
-              30 => 93.7,
-              50 => 102.01,
-              100 => 124.77,
+              10 => 51,
+              20 => 63,
+              30 => 93,
+              50 => 102,
+              100 => 124,
             ),
             'prazo' => 5,
           ),
           'Espírito Santo - Interior' =>
           array (
             'ini' => '29099999',
-            'end' => '29999101',
+            'end' => '29999100',
             'opcoes' =>
             array (
-              10 => 59.13,
-              20 => 71.97,
-              30 => 104.09,
-              50 => 127.07,
-              100 => 156.89,
+              10 => 59,
+              20 => 71,
+              30 => 104,
+              50 => 127,
+              100 => 156,
             ),
             'prazo' => 7,
           ),
-          'São Paulo - Capital 1' =>
+          'São Paulo - Capital ' =>
           array (
             'ini' => '01000001',
             'end' => '05999999',
             'opcoes' =>
             array (
-              10 => 36.39,
-              20 => 40.02,
-              30 => 56.52,
-              50 => 64.85,
-              100 => 77.88,
+              10 => 36,
+              20 => 40,
+              30 => 56,
+              50 => 64,
+              100 => 77,
             ),
             'prazo' => 3,
           ),
-          'São Paulo - Capital 2' =>
+          'São Paulo - Capital 1' =>
           array (
             'ini' => '08000000',
             'end' => '08499999',
             'opcoes' =>
             array (
-              10 => 36.39,
-              20 => 40.02,
-              30 => 56.52,
-              50 => 64.85,
-              100 => 77.88,
+              10 => 36,
+              20 => 40,
+              30 => 56,
+              50 => 64,
+              100 => 77,
             ),
             'prazo' => 3,
           ),
@@ -335,11 +418,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '19999999',
             'opcoes' =>
             array (
-              10 => 39.81,
-              20 => 42.25,
-              30 => 59.49,
-              50 => 68.12,
-              100 => 87.18,
+              10 => 39,
+              20 => 42,
+              30 => 59,
+              50 => 68,
+              100 => 87,
             ),
             'prazo' => 4,
           ),
@@ -349,39 +432,39 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '19999100',
             'opcoes' =>
             array (
-              10 => 38.03,
-              20 => 45.71,
-              30 => 64.93,
-              50 => 72.77,
-              100 => 91.65,
+              10 => 38,
+              20 => 45,
+              30 => 64,
+              50 => 72,
+              100 => 91,
             ),
             'prazo' => 5,
           ),
           'São Paulo - Int. reg Bauru/RP/SJP/Camp/Fca' =>
           array (
             'ini' => '08500000',
-            'end' => '19999101',
+            'end' => '19999100',
             'opcoes' =>
             array (
-              10 => 58.87,
-              20 => 64.63,
-              30 => 95.34,
-              50 => 105.77,
-              100 => 132.84,
+              10 => 58,
+              20 => 64,
+              30 => 95,
+              50 => 105,
+              100 => 132,
             ),
             'prazo' => 5,
           ),
           'São Paulo - Interior' =>
           array (
             'ini' => '08500000',
-            'end' => '19999102',
+            'end' => '19999100',
             'opcoes' =>
             array (
-              10 => 60.33,
-              20 => 69.08,
-              30 => 99.79,
-              50 => 111.24,
-              100 => 141.89,
+              10 => 60,
+              20 => 69,
+              30 => 99,
+              50 => 111,
+              100 => 141,
             ),
             'prazo' => 6,
           ),
@@ -391,11 +474,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '23799999',
             'opcoes' =>
             array (
-              10 => 38.26,
-              20 => 43.13,
-              30 => 62.73,
-              50 => 75.6,
-              100 => 82.45,
+              10 => 38,
+              20 => 43,
+              30 => 62,
+              50 => 75,
+              100 => 82,
             ),
             'prazo' => 5,
           ),
@@ -405,11 +488,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '28999999',
             'opcoes' =>
             array (
-              10 => 41.67,
-              20 => 45.35,
-              30 => 65.7,
-              50 => 77.52,
-              100 => 86.89,
+              10 => 41,
+              20 => 45,
+              30 => 65,
+              50 => 77,
+              100 => 86,
             ),
             'prazo' => 5,
           ),
@@ -419,11 +502,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '28999100',
             'opcoes' =>
             array (
-              10 => 47.26,
-              20 => 52.25,
-              30 => 71.73,
-              50 => 81.67,
-              100 => 100.54,
+              10 => 47,
+              20 => 52,
+              30 => 71,
+              50 => 81,
+              100 => 100,
             ),
             'prazo' => 6,
           ),
@@ -433,11 +516,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '82999999',
             'opcoes' =>
             array (
-              10 => 31.56,
-              20 => 36.92,
-              30 => 50.3,
-              50 => 59.84,
-              100 => 75.85,
+              10 => 31,
+              20 => 36,
+              30 => 50,
+              50 => 59,
+              100 => 75,
             ),
             'prazo' => 2,
           ),
@@ -447,11 +530,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '87999999',
             'opcoes' =>
             array (
-              10 => 33.48,
-              20 => 39.14,
-              30 => 53.27,
-              50 => 61.27,
-              100 => 78.65,
+              10 => 33,
+              20 => 39,
+              30 => 53,
+              50 => 61,
+              100 => 78,
             ),
             'prazo' => 4,
           ),
@@ -461,41 +544,27 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '87999100',
             'opcoes' =>
             array (
-              10 => 54.79,
-              20 => 60.8,
-              30 => 78.76,
-              50 => 81.77,
-              100 => 98.91,
+              10 => 54,
+              20 => 60,
+              30 => 78,
+              50 => 81,
+              100 => 98,
             ),
             'prazo' => 4,
           ),
           'Paraná - Interior' =>
           array (
             'ini' => '82999999',
-            'end' => '87999101',
+            'end' => '87999100',
             'opcoes' =>
             array (
-              10 => 49.95,
-              20 => 58.46,
-              30 => 78.73,
-              50 => 80.97,
-              100 => 98.04,
+              10 => 49,
+              20 => 58,
+              30 => 78,
+              50 => 80,
+              100 => 98,
             ),
             'prazo' => 5,
-          ),
-          'Santa Catarina - Reg Blumenau/Joinville/Jaraguá' =>
-          array (
-            'ini' => '88000001',
-            'end' => '88099999',
-            'opcoes' =>
-            array (
-              10 => 31.33,
-              20 => 36.52,
-              30 => 49.52,
-              50 => 55.69,
-              100 => 68.85,
-            ),
-            'prazo' => 4,
           ),
           'Santa Catarina - Litoral/Vale Itajaí' =>
           array (
@@ -503,11 +572,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '89999999',
             'opcoes' =>
             array (
-              10 => 37.57,
-              20 => 43.95,
-              30 => 59.92,
-              50 => 74.85,
-              100 => 90.85,
+              10 => 37,
+              20 => 43,
+              30 => 59,
+              50 => 74,
+              100 => 90,
             ),
             'prazo' => 5,
           ),
@@ -517,39 +586,39 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '89999100',
             'opcoes' =>
             array (
-              10 => 38.94,
-              20 => 45.27,
-              30 => 61.06,
-              50 => 76.24,
-              100 => 91.21,
+              10 => 38,
+              20 => 45,
+              30 => 61,
+              50 => 76,
+              100 => 91,
             ),
             'prazo' => 5,
           ),
           'Santa Catarina - Interior 1 ( Rio do Sul)' =>
           array (
             'ini' => '88099999',
-            'end' => '89999101',
+            'end' => '89999100',
             'opcoes' =>
             array (
-              10 => 44.24,
-              20 => 52.12,
-              30 => 71.8,
-              50 => 78.65,
-              100 => 92.14,
+              10 => 44,
+              20 => 52,
+              30 => 71,
+              50 => 78,
+              100 => 92,
             ),
             'prazo' => 5,
           ),
           'Santa Catarina - Interior São Bento Sul ' =>
           array (
             'ini' => '88099999',
-            'end' => '89999102',
+            'end' => '89999100',
             'opcoes' =>
             array (
-              10 => 50.34,
-              20 => 60.28,
-              30 => 85.16,
-              50 => 98.25,
-              100 => 127.84,
+              10 => 50,
+              20 => 60,
+              30 => 85,
+              50 => 98,
+              100 => 127,
             ),
             'prazo' => 5,
           ),
@@ -559,11 +628,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '61599999',
             'opcoes' =>
             array (
-              10 => 76.3,
-              20 => 86.47,
-              30 => 101.27,
-              50 => 157.89,
-              100 => 254.98,
+              10 => 76,
+              20 => 86,
+              30 => 101,
+              50 => 157,
+              100 => 254,
             ),
             'prazo' => 8,
           ),
@@ -573,11 +642,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '63999999',
             'opcoes' =>
             array (
-              10 => 89.53,
-              20 => 102.77,
-              30 => 168.65,
-              50 => 214.77,
-              100 => 298.54,
+              10 => 89,
+              20 => 102,
+              30 => 168,
+              50 => 214,
+              100 => 298,
             ),
             'prazo' => 12,
           ),
@@ -587,11 +656,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '52999999',
             'opcoes' =>
             array (
-              10 => 72.56,
-              20 => 84.43,
-              30 => 115.64,
-              50 => 159.87,
-              100 => 227.47,
+              10 => 72,
+              20 => 84,
+              30 => 115,
+              50 => 159,
+              100 => 227,
             ),
             'prazo' => 7,
           ),
@@ -601,11 +670,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '56999999',
             'opcoes' =>
             array (
-              10 => 79.45,
-              20 => 91.45,
-              30 => 112.64,
-              50 => 174.84,
-              100 => 238.65,
+              10 => 79,
+              20 => 91,
+              30 => 112,
+              50 => 174,
+              100 => 238,
             ),
             'prazo' => 11,
           ),
@@ -615,11 +684,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '59139999',
             'opcoes' =>
             array (
-              10 => 86.27,
-              20 => 92.76,
-              30 => 114.77,
-              50 => 182.66,
-              100 => 273.85,
+              10 => 86,
+              20 => 92,
+              30 => 114,
+              50 => 182,
+              100 => 273,
             ),
             'prazo' => 8,
           ),
@@ -629,11 +698,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '59999999',
             'opcoes' =>
             array (
-              10 => 95.15,
-              20 => 102.74,
-              30 => 148.45,
-              50 => 197.67,
-              100 => 284.85,
+              10 => 95,
+              20 => 102,
+              30 => 148,
+              50 => 197,
+              100 => 284,
             ),
             'prazo' => 12,
           ),
@@ -643,11 +712,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '57099999',
             'opcoes' =>
             array (
-              10 => 89.4,
-              20 => 97.45,
-              30 => 113.85,
-              50 => 184.21,
-              100 => 224.54,
+              10 => 89,
+              20 => 97,
+              30 => 113,
+              50 => 184,
+              100 => 224,
             ),
             'prazo' => 8,
           ),
@@ -657,11 +726,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '57999999',
             'opcoes' =>
             array (
-              10 => 91.77,
-              20 => 101.02,
-              30 => 126.84,
-              50 => 172.66,
-              100 => 201.02,
+              10 => 91,
+              20 => 101,
+              30 => 126,
+              50 => 172,
+              100 => 201,
             ),
             'prazo' => 10,
           ),
@@ -671,11 +740,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '58099999',
             'opcoes' =>
             array (
-              10 => 65.2,
-              20 => 77.65,
-              30 => 92.57,
-              50 => 104.86,
-              100 => 175.87,
+              10 => 65,
+              20 => 77,
+              30 => 92,
+              50 => 104,
+              100 => 175,
             ),
             'prazo' => 8,
           ),
@@ -685,11 +754,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '58999999',
             'opcoes' =>
             array (
-              10 => 75.88,
-              20 => 92.85,
-              30 => 107.95,
-              50 => 128.93,
-              100 => 191.47,
+              10 => 75,
+              20 => 92,
+              30 => 107,
+              50 => 128,
+              100 => 191,
             ),
             'prazo' => 12,
           ),
@@ -699,11 +768,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '64099999',
             'opcoes' =>
             array (
-              10 => 74.89,
-              20 => 86.77,
-              30 => 101.08,
-              50 => 127.46,
-              100 => 178.69,
+              10 => 74,
+              20 => 86,
+              30 => 101,
+              50 => 127,
+              100 => 178,
             ),
             'prazo' => 8,
           ),
@@ -713,11 +782,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '64999999',
             'opcoes' =>
             array (
-              10 => 82.45,
-              20 => 91.72,
-              30 => 103.44,
-              50 => 129.02,
-              100 => 174.67,
+              10 => 82,
+              20 => 91,
+              30 => 103,
+              50 => 129,
+              100 => 174,
             ),
             'prazo' => 12,
           ),
@@ -727,11 +796,11 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '49098999',
             'opcoes' =>
             array (
-              10 => 78.47,
-              20 => 94.85,
-              30 => 111.52,
-              50 => 137.66,
-              100 => 187.65,
+              10 => 78,
+              20 => 94,
+              30 => 111,
+              50 => 137,
+              100 => 187,
             ),
             'prazo' => 6,
           ),
@@ -741,16 +810,99 @@ class Application_Model_Supreme implements Application_Model_Frete
             'end' => '49999999',
             'opcoes' =>
             array (
-              10 => 82.44,
-              20 => 91.74,
-              30 => 117.84,
-              50 => 156.94,
-              100 => 202.45,
+              10 => 82,
+              20 => 91,
+              30 => 117,
+              50 => 156,
+              100 => 202,
             ),
             'prazo' => 9,
           ),
+          'Maranhão - Capital' =>
+          array (
+            'ini' => '65000001',
+            'end' => '65109999',
+            'opcoes' =>
+            array (
+              10 => 95,
+              20 => 124,
+              30 => 162,
+              50 => 207,
+              100 => 248,
+            ),
+            'prazo' => 11,
+          ),
+          ' Maranhão - Interior' =>
+          array (
+            'ini' => '65110000',
+            'end' => '65999999',
+            'opcoes' =>
+            array (
+              10 => 107,
+              20 => 135,
+              30 => 208,
+              50 => 262,
+              100 => 301,
+            ),
+            'prazo' => 15,
+          ),
+          'Pará - Capital' =>
+          array (
+            'ini' => '66000001',
+            'end' => '66999999',
+            'opcoes' =>
+            array (
+              10 => 75,
+              20 => 87,
+              30 => 128,
+              50 => 186,
+              100 => 206,
+            ),
+            'prazo' => 12,
+          ),
+          'Pará - Interior' =>
+          array (
+            'ini' => '67000000',
+            'end' => '68899999',
+            'opcoes' =>
+            array (
+              10 => 98,
+              20 => 108,
+              30 => 194,
+              50 => 245,
+              100 => 301,
+            ),
+            'prazo' => 16,
+          ),
+          'Acre - Capital' =>
+          array (
+            'ini' => '69900001',
+            'end' => '69923999',
+            'opcoes' =>
+            array (
+              10 => 84,
+              20 => 175,
+              30 => 228,
+              50 => 384,
+              100 => 407,
+            ),
+            'prazo' => 16,
+          ),
+          'Acre - Interior' =>
+          array (
+            'ini' => '69924000',
+            'end' => '69999999',
+            'opcoes' =>
+            array (
+              10 => 84,
+              20 => 175,
+              30 => 228,
+              50 => 384,
+              100 => 407,
+            ),
+            'prazo' => 16,
+          ),
         );
-
 	}
 
 	public function __construct($params,$opcao) {
