@@ -51,7 +51,7 @@ class Application_Model_BoletoBancoDoBrasil extends Application_Model_Boleto
 
         $nosso_numero = $this->_getNossoNumero();
         if ($this->_nossoNumeroComDV) {
-            $nosso_numero .= '-'.$this->_modulo11($nosso_numero);
+            $nosso_numero .= '-'.$this->_modulo11($nosso_numero,false,true);
         }
 
 		// variáveis para a camada de visualização
