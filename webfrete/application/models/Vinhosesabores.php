@@ -6,7 +6,6 @@ class Application_Model_VinhosESabores implements Application_Model_Frete
 
 	private function _getFaixas() {
 	return array (
-        array (
           'SãoPaulo-Capital' =>
           array (
             'ini' => '01000000',
@@ -907,8 +906,7 @@ class Application_Model_VinhosESabores implements Application_Model_Frete
             ),
             'prazo' => 5,
           ),
-        )
-	);
+	    );
 	}
 
 	public function __construct($params,$opcao) {
