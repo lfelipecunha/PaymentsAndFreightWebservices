@@ -968,7 +968,7 @@ class Application_Model_Supreme implements Application_Model_Frete
 /*		if (($this->_isRegiaoSul($cep_destino) || $this->_isRegiaoSudeste($cep_destino)) && $valor_produtos > 50000) {
 			return true;
 		}*/
-        $states = array('DF', 'ES', 'GO', 'PR', 'RJ', 'RS', 'SC', 'SP', 'MG', 'BA');
+        $states = array('DF', 'ES', 'GO', 'PR', 'RJ', 'RS', 'SC', 'SP', 'MG');
         $table = new Application_Model_DbTable_Estados();
         $select = $table->select()->where('sigla IN(?)',$states);
         $states = $table->fetchAll($select);
