@@ -47,7 +47,7 @@ class Application_Model_JadLog implements Application_Model_Frete
 		$params['peso_total'] = 0;
 		// calcula o peso total dos produtos
 		foreach ($params['produtos'] as $produto) {
-			$params['peso_total'] += $produto['peso'];
+			$params['peso_total'] += $produto['peso']*$produto['quantidade'];
 		}
 		// instância do formulário para consulta da JadLog
 		$form = new Application_Form_JadLogConsulta();
