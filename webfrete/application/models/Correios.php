@@ -116,8 +116,8 @@ class Application_Model_Correios implements Application_Model_Frete
 		// funcionar somente com esta versão
 		$soap_cliente->setSoapVersion(SOAP_1_1);
 		// define o timeout para a conexão do serviço
-		$context = stream_context_create(array('http' => array('timeout' => 8)));
-		$old = ini_set('default_socket_timeout',8);
+		$context = stream_context_create(array('http' => array('timeout' => 5)));
+		$old = ini_set('default_socket_timeout',5);
 		$soap_cliente->setStreamContext($context);
 
 		// inicializa os valores em zero
@@ -155,13 +155,17 @@ class Application_Model_Correios implements Application_Model_Frete
 					// Seta o erro como zero para indicar que não houve erro
 					$result['erro'] = 0;
 				} else {
+					// Condição para verificar se o erro do webservice dos correios foi um erro interno, em caso
+					// em caso positivo lança um SopaFault para obter os dados da contingência;;<<<<
+					if ($valores->Erro == '99') {
+						throw new SoapFault();
+					}
 					// se houve erro na requisição lança uma excessão
 					throw new F1S_Basket_Freight_FreightErrorException('',102);
 				}
 				if ($result['valor'] <= 1) {
 					throw new SoapFault('1','Valor Invalido');
 				}
-
 			} catch (SoapFault $sp){ // caso tenha ocorrido algum erro de comunicação com o servidor dos correios
 				// inicializa o peso
 				$peso = 0;
