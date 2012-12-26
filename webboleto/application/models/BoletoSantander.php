@@ -28,7 +28,7 @@ class Application_Model_BoletoSantander extends Application_Model_Boleto
 			'agencia'         => $this->agencia.'-'.$this->_modulo11($this->agencia,false),
 			'nosso_numero'    => $nosso_numero,
 			'data_hoje'       => date('d/m/Y'),
-			'vencimento'      => $data->toString('dd/MM/YY'),
+			'vencimento'      => $data->toString('dd/MM/yy'),
 			'valor'           => number_format(($this->valor/100),2,',','.'),
 			'carteira'        => '102 - Cobrança Simples CSR',
 		);

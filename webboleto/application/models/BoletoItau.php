@@ -54,7 +54,7 @@ class Application_Model_BoletoItau extends Application_Model_Boleto
 			'conta'           => $this->conta.'-'.$this->_modulo10($this->agencia.$this->conta),
 			'nosso_numero'    => $nosso_numero.'-'.$this->_modulo10($nosso_numero),
 			'data_hoje'       => date('d/m/Y'),
-			'vencimento'      => $data->toString('dd/MM/Y'),
+			'vencimento'      => $data->toString('dd/MM/y'),
 			'valor'           => number_format(($this->valor/100),2,',','.'),
 		);
 		$vars += $this->_params;

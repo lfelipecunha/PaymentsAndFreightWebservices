@@ -54,7 +54,7 @@ class Application_Model_BoletoBradesco extends Application_Model_Boleto
 			'conta'           => $this->conta.'-'.$this->_modulo11($this->conta,false),
 			'nosso_numero'    => $nosso_numero.'-'.$this->_modulo10($nosso_numero),
 			'data_hoje'       => date('d/m/Y'),
-			'vencimento'      => $data->toString('dd/MM/YY'),
+			'vencimento'      => $data->toString('dd/MM/yy'),
 			'valor'           => number_format(($this->valor/100),2,',','.'),
 		);
 		$vars += $this->_params;

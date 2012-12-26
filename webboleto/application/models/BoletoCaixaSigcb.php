@@ -41,7 +41,7 @@ class Application_Model_BoletoCaixaSigcb extends Application_Model_Boleto
 			'linha_digitavel' => $codes['linha_digitavel'],
 			'logo_caixa'      => base64_encode($logo_caixa),
 			'valor'           => number_format(($this->valor/100),2,',','.'),
-			'vencimento'      => $data->toString('dd/MM/Y'),
+			'vencimento'      => $data->toString('dd/MM/y'),
 		);
 		$vars += $this->_params;
 		// adiciona o digito verificador para o campo nosso número

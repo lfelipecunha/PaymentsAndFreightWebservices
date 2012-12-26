@@ -65,7 +65,7 @@ class Application_Model_BoletoBancoDoBrasil extends Application_Model_Boleto
 			'linha_digitavel'  => $linha_digitavel,
 			'logo'             => base64_encode($logo),
 			'valor'            => number_format(($this->valor/100),2,',','.'),
-			'vencimento'       => $data->toString('dd/MM/Y'),
+			'vencimento'       => $data->toString('dd/MM/y'),
 			'nosso_numero'     => $nosso_numero,
 			'numero_documento' => (int)$this->nosso_numero,
 			'agencia'          => $this->agencia.'-'.$agencia_digito,
