@@ -76,7 +76,7 @@ class Dispatch {
             $controller->$action();
         } catch (Exception $e) {
             if (ENVIROMENT == 'production') {
-                header('HTTP/1.1 503 Service Unavailable');
+                header('HTTP/1.1 500 Internal Server Error');
                 header('Content-Type: application/json');
                 echo json_encode(array('code' => 0,'error' => 'Ocorreu um erro no servidor!'));
             } else {
