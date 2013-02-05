@@ -53,7 +53,7 @@ class App_Models_Order extends App_Models_BCashAbstract {
             );
         }
         $result = $this->_doRequest('createTransaction',$data);
-        var_dump($result);die;
+        return $result;
     }
 
     private function _getSignature($nonce,$time) {
@@ -72,7 +72,7 @@ class App_Models_Order extends App_Models_BCashAbstract {
         $nonce = md5(microtime().mt_rand());
         $token = $this->getToken();
         $signature = $this->_getSignature($nonce,$time);
-        $data = 'Authorization: OAuth realm=https://api.pagamentodigital.com.br/checkout/xml/'.
+        $data = 'Authorization: OAuth realm=https://api.pagamentodigital.com.br/checkout/json/'.
             ',oauth_consumer_key='.$this->getConsumerKey().
             ',oauth_nonce='.$nonce.
             ',oauth_signature='. $signature.
@@ -84,7 +84,6 @@ class App_Models_Order extends App_Models_BCashAbstract {
             $data,
             'Content-type:application/x-www-form-urlencoded;charset='.$this->getEncode()
         );
-        var_dump($headers);
         return $headers;
     }
 }

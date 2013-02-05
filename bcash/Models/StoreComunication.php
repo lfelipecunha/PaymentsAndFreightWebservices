@@ -4,7 +4,7 @@ class App_Models_StoreComunication {
 
     private $_storeUrl = '';
 
-    public function _construct($storeUrl) {
+    public function __construct($storeUrl) {
         $this->setStoreUrl($storeUrl);
     }
 
@@ -18,19 +18,19 @@ class App_Models_StoreComunication {
         return $this->_storeUrl;
     }
 
-    public function sendMessage() {
+    public function sendMessage($data) {
         $url = $this->getStoreUrl();
         $data = json_encode($data);
-        $params = array('data' => $data,'encode' => $this->getEncode());
-        var_dump($params);
+        $params = array('data' => $data);
         $curl = curl_init();
         curl_setopt($curl,CURLOPT_URL,$url);
         curl_setopt($curl,CURLOPT_POST,true);
         curl_setopt($curl,CURLOPT_POSTFIELDS,http_build_query($params));
-        curl_setopt($curl,CURLOPT_HTTPHEADER,$this->_getHeader($url));
         curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
         $response = curl_exec($curl);
         $httpCode = curl_getinfo($curl,CURLINFO_HTTP_CODE);
         curl_close($curl);
+        return $httpCode == '200';
+
     }
 }

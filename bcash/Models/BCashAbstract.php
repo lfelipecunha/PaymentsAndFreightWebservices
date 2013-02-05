@@ -66,7 +66,6 @@ abstract class App_Models_BCashAbstract {
         $url = 'https://api.bcash.com.br/service/'.$method.'/json';
         $data = json_encode($data);
         $params = array('data' => $data,'encode' => $this->getEncode());
-        var_dump($params);
         $curl = curl_init();
         curl_setopt($curl,CURLOPT_URL,$url);
         curl_setopt($curl,CURLOPT_POST,true);
@@ -76,6 +75,12 @@ abstract class App_Models_BCashAbstract {
         $response = curl_exec($curl);
         $httpCode = curl_getinfo($curl,CURLINFO_HTTP_CODE);
         curl_close($curl);
-        return array('code' => $httpCode,'response' => json_decode($response,true));
+        $response = json_decode($response,true);
+        if ($httpCode != 200) {
+            App_Log::addLog('error','HttpCode:'.$httpCode.' Error: '.$response['list'][0]['code'].' Message: '.urldecode($response['list'][0]['description']).' Params: '.$data);
+            return false;
+        } else {
+            return $response;
+        }
     }
 }
