@@ -10,7 +10,7 @@ function __autoLoad($className) {
     $classPath = implode(DS,$path);
     $file = APP_PATH.DS.$classPath.'.php';
     if (!is_file($file) || !is_readable($file)) {
-        $message = sprintf('Controller "%s" not found! Please insert class "%s" at file "%s"',$className,$className,$file);
+        $message = sprintf('Class "%s" not found! Please insert class "%s" at file "%s"',$className,$className,$file);
         throw new Exception($message);
     }
     require_once $file;
