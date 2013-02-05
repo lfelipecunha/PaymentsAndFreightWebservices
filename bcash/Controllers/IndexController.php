@@ -2,11 +2,11 @@
 
 class App_Controllers_IndexController extends Controller {
     public function indexAction() {
-        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+        if (!$this->_requestHandler->isPost()) {
             $response = array('O acesso a este serviço é somente por POST');
         } else {
             $container = new App_Models_Containers_Order();
-            $data = $_POST;
+            $data = $this->_requestHandler->getPost();
             if (!$container->isValid($data)) {
                 $response = array('code' => 0,'errors' => $container->getInvalidFields());
             } else {

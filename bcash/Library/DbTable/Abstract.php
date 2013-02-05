@@ -33,4 +33,14 @@ class DbTable_Abstract {
         $adapter = App_DbAdapter::getAdapter();
         return $adapter->delete($this->_tableName,$where);
     }
+
+    private function _findBy($column,$value) {
+        return $this->_fetchRow(array('where' => array($column => $value)));
+    }
+
+    public function __call($method,$args) {
+        if (preg_match('/^findBy(.+)/',$method,$match) === 1) {
+            return $this->_findBy($match[1],array_shift($args));
+        }
+    }
 }

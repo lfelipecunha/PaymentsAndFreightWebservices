@@ -86,4 +86,33 @@ class App_Models_Order extends App_Models_BCashAbstract {
         );
         return $headers;
     }
+
+    public function verifyStatusCode($transaction,$status,$statusCode,$originalValue,$shopValue,$orderId) {
+
+        $params = array(
+            'transacao'=> $transactionId,
+            'status' => $status,
+            'cod_status' => $statusCode,
+            'valor_original' => $originalValue,
+            'valor_loja' => $shopValue,
+            'token' => '',
+        );
+        debug($params);
+
+        $url = "https://www.bcash.com.br/checkout/verify/";
+
+
+        $ch = curl_init();
+        curl_setopt ($ch, CURLOPT_URL, $url);
+        curl_setopt ($ch, CURLOPT_POST, 1);
+        curl_setopt ($ch, CURLOPT_POSTFIELDS, http_build_query($params));
+        curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec ($ch);
+
+        debug($response);
+
+        if (trim($resonse)=="VERIFICADO") {
+        }
+
+    }
 }

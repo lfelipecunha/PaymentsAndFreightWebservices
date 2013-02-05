@@ -35,3 +35,12 @@ function addErrorMessage($number,$message,$file,$line) {
     App_Log::addLog('error','Type: '.$number.' | Message: '.$message. ' | File: '.$file.' | Line: '.$line);
 }
 
+
+function debug($values) {
+    $trace = debug_backtrace();
+    $last = array_shift($trace);
+    echo '<strong>'.$last['file']. ' line: '.$last['line'].'</strong>';
+    echo '<pre>';
+    var_dump($values);
+    echo '</pre>';
+}

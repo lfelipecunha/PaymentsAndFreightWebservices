@@ -20,7 +20,7 @@ class Dispatch {
         if (!empty($url)) {
             $url = rtrim($url,'/');
             $url = explode('/',$url);
-            $controller = array_shift($url);
+            $controller = str_replace('.php','',array_shift($url));
             if (!empty($url)) {
                 $action = array_shift($url);
                 if (!empty($url)) {
@@ -75,12 +75,18 @@ class Dispatch {
             $action = $this->_getActionName();
             $controller->$action();
         } catch (Exception $e) {
-            echo '<h1>'.get_class($e).'</h1>';
-            echo '<strong>'.$e->getMessage().'</strong>';
-            echo '<pre>';
-            echo "\n";
-            debug_print_backtrace();
-            echo '</pre>';
+            if (ENVIROMENT == 'production') {
+                header('HTTP/1.1 503 Service Unavailable');
+                header('Content-Type: application/json');
+                echo json_encode(array('code' => 0,'error' => 'Ocorreu um erro no servidor!'));
+            } else {
+                echo '<h1>'.get_class($e).'</h1>';
+                echo '<strong>'.$e->getMessage().'</strong>';
+                echo '<pre>';
+                echo "\n";
+                debug_print_backtrace();
+                echo '</pre>';
+            }
             die;
         }
     }
