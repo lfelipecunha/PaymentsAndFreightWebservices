@@ -12,6 +12,11 @@ if (!($cron instanceof App_Services_Abstract)) {
     throw new Exception('Invalid Cron');
 }
 while(true) {
+    $resetFile = APP_PATH.DS.'tmp'.DS.'stop_'.strtolower($argv[1]);
+    if (is_file($resetFile)) {
+        unlink($resetFile);
+        break;
+    }
     $cron->run();
     sleep($cron->getPauseTime());
 }
