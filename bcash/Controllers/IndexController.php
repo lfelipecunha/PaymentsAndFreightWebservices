@@ -20,4 +20,25 @@ class App_Controllers_IndexController extends Controller {
         header('Content-Type: application/json');
         echo json_encode($response);
     }
+
+    public function installmentAction() {
+
+        if (!$this->_requestHandler->isPost()) {
+            $response = array('O acesso a este serviço é somente por POST');
+        } else {
+            $container = new App_Models_Containers_Installments();
+            $data = $this->_requestHandler->getPost();
+            if (!$container->isValid($data)) {
+                $response = array('errors' => $container->getInvalidFields());
+            } else {
+                $info = $container->getValues();
+                $installment = new App_Models_Installments($info['valorTotal'],(array)$info['prestacoesComAcrescimo']);
+                $response = array('parcelas' => $installment->getInstallments());
+
+            }
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
 }

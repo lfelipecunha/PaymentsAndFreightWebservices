@@ -46,12 +46,20 @@ class Validation_Container {
     public function isValid($data) {
         $validatorName = $this->getName();
         if (!empty($validatorName)) {
-            $data = (array)@$data[$validatorName];
+            if (array_key_exists($validatorName,$data)) {
+                $data = $data[$validatorName];
+            } else {
+                $data = array();
+            }
         }
         $isValid = true;
         foreach ($this->getElements() as $element) {
             $elementName = $element->getName();
-            $element->setValue(@$data[$elementName]);
+            $elementValue = null;
+            if (array_key_exists($elementName,$data)) {
+                $elementValue = $data[$elementName];
+            }
+            $element->setValue($elementValue);
             if (!$element->isValid()) {
                 $this->_invalidFields[$elementName] = $element->getErrors();
                 $isValid = false;

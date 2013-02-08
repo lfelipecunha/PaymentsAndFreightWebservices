@@ -11,7 +11,14 @@ class App_Models_Containers_Payment extends Validation_Container {
         $this->addElement($increase);
 
         $code = new Validation_Element('codigo');
-        $code->addValidator(new Validation_Validator_In(array('values' => array('5'))));
+        $cards = array(
+            'Visa' => 1,
+            'Mastercard' => 2,
+            'Amex' => 37,
+            'Diners' => 55,
+            'Elo' => 63,
+        );
+        $code->addValidator(new Validation_Validator_In(array('values' => $cards)));
         $this->addElement($code);
 
         $installment = new Validation_Element('parcelas');

@@ -12,5 +12,9 @@ class App_Models_Containers_Shop extends Validation_Container {
 
         $consumerKey = new Validation_Element('consumerKey');
         $this->addElement($consumerKey);
+
+        $url = new Validation_Element('url');
+        $url->addValidator(new Validation_Validator_Url());
+        $this->addElement($url);
     }
 }

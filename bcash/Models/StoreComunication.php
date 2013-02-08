@@ -29,6 +29,7 @@ class App_Models_StoreComunication {
         curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
         $response = curl_exec($curl);
         $httpCode = curl_getinfo($curl,CURLINFO_HTTP_CODE);
+        var_dump($httpCode);var_dump($response);
         curl_close($curl);
         return $httpCode == '200';
 

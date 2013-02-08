@@ -34,7 +34,7 @@ class Mysql_Adapter
 	}
 
 	protected function _parseWhere($where, $aditional = 'AND') {
-		if ($where instanceof MysqlExpr) {
+		if ($where instanceof Mysql_Expr) {
 			return $where->getExpr();
 		} elseif (is_array($where)) {
 			$result = '';

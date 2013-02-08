@@ -9,7 +9,7 @@ foreach ($services as $service) {
     $file = $filePath.$service['fileName'];
     $pid = (int)@file_get_contents($file);
     if (!empty($pid) && posix_kill($pid,SIG_BLOCK)) {
-        exit();
+        continue;
     }
 
     $pid = pcntl_fork();
