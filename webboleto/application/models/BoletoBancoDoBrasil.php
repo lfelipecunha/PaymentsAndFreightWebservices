@@ -122,7 +122,7 @@ class Application_Model_BoletoBancoDoBrasil extends Application_Model_Boleto
 			$nosso_numero = '000000'.$nosso_numero;
 		}
 		$valor = str_pad($this->valor,10,0,STR_PAD_LEFT);
-		$parte2 = $fator_vencimento.$valor.$nosso_numero.$this->carteira;
+		$parte2 = $fator_vencimento.$valor.$nosso_numero.substr($this->carteira, -2);
 
 		// calculo do digito verificador
 		$digito_verificador = $this->_modulo11($parte1.$parte2);
