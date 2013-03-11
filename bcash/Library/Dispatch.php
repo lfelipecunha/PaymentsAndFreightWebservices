@@ -75,7 +75,7 @@ class Dispatch {
             $action = $this->_getActionName();
             $controller->$action();
         } catch (Exception $e) {
-            if (ENVIROMENT == 'production') {
+            if (ENVIRONMENT == 'production') {
                 header('HTTP/1.1 500 Internal Server Error');
                 header('Content-Type: application/json');
                 echo json_encode(array('code' => 0,'error' => 'Ocorreu um erro no servidor!'));
