@@ -7,6 +7,8 @@
         <input type="text" name="loja[token]" value="0045AAB1C3A723F1B6FB024C6BAA0642"/><br/>
         <label>ConsumerKey</label>
         <input type="text" name="loja[consumerKey]" value="dd3e9cd87b24d9afda41d7dc7633721f5a47e60e"/><br/>
+        <label>Url da Loja</label>
+        <input type="text" name="loja[url]" value=""/><br/>
     </fieldset>
     <fieldset>
         <legend>Comprador</legend>
