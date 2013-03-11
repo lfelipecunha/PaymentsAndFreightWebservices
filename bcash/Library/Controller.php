@@ -10,4 +10,11 @@ class Controller {
 
     public function beforeAction(){}
 
+
+    protected function _sendJsonAndExit(array $info) {
+        header('Content-Type: application/json');
+        echo json_encode($info);
+        exit();
+    }
+
 }

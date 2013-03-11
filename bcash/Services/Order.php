@@ -7,6 +7,7 @@ class App_Services_Order extends App_Services_Abstract{
         $time = $this->getPauseTime();
         $status = true;
         $data = $table->fetchAll(array('where' => array('status' => 'AGUARDANDO PROCESSAMENTO')));
+
         if (empty($data)) {
             $status = false;
         }
@@ -14,9 +15,16 @@ class App_Services_Order extends App_Services_Abstract{
             $loja = $order['valores']['loja'];
             $model = new App_Models_Order($loja['email'],$loja['token'],$loja['consumerKey']);
             $result = $model->insert($order);
-            if ($result === false) {
+            if (in_array($result['code'],array(405,415,500,503))) {
                 $status = false;
                 break;
+            } elseif ($result['response'] != 200) {
+                $values['status'] = 'CANCELADO';
+                $values['notificada'] = 0;
+                $valores = $table->removeCardValues($order['valores']);
+                $values['valores'] = serialize($valores);
+                $table->update($values,array('id' => $order['id']));
+                continue;
             }
             $table->addResultRegistry($result,$order['id']);
             $table->alterStatus('EM ANDAMENTO',$order['id']);

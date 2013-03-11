@@ -37,15 +37,39 @@ class App_Models_DbTable_Order extends DbTable_Abstract {
         return $result;
     }
 
+    public function getStatusByCode($code) {
+        switch ($code) {
+            case 2:
+                $status = 'EM ANALISE';
+                break;
+            case 3:
+                $status = 'APROVADO';
+                break;
+            case 4:
+                $status = 'FINALIZADO';
+                break;
+            case 5:
+                $status = 'CANCELADO';
+                break;
+            case 1:
+            default:
+                $status = 'EM ANDAMENTO';
+                break;
+        }
+        return $status;
+    }
+
     public function addResultRegistry($info,$orderId) {
         $order = $this->fetchRow(array('where' => array('id' => $orderId)));
         if (!empty($order)) {
-            $result = array();
-            if (!empty($order['resultado'])) {
-                $result = unserialize($order['resultado']);
-            }
+            $result = $order['resultado'];
             $result[] = $info;
-            $values = array('resultado' => serialize($result),'notificada' => 0);
+            $status = $this->getStatusByCode($info['status']);
+            $values = array('resultado' => serialize($result),'notificada' => 0,'status' => $status);
+            if ($status != 'EM ANDAMENTO') {
+                $valores = $this->removeCardValues($order['valores']);
+                $values['valores'] = serialize($valores);
+            }
             $this->update($values,array('id' => $orderId));
         }
     }
@@ -57,5 +81,12 @@ class App_Models_DbTable_Order extends DbTable_Abstract {
 
     public function alterStatus($status,$orderId) {
         return $this->update(array('status' => $status),array('id' => $orderId));
+    }
+
+    public function removeCardValues($values) {
+        $numero = $values['pagamento']['cartao']['numero'];
+        $values['pagamento']['cartao']['numero'] =  substr($numero,0,4).str_repeat('*',strlen($numero)-8).substr($numero,-4);
+        $values['pagamento']['cartao']['codigoSeguranca'] = null;
+        return $values;
     }
 }

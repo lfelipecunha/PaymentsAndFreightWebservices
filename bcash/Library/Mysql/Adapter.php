@@ -21,7 +21,7 @@ class Mysql_Adapter
 	}
 
 	public function debugSql($flag) {
-		$this->_debugSql = (boolean)$flag;
+		$this->_debugSql = (bool)$flag;
 	}
 
 	public function getLastSql() {

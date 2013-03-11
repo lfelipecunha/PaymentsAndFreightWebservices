@@ -11,6 +11,7 @@ class App_Models_Order extends App_Models_BCashAbstract {
         $data = array(
             'sellerMail' => $this->getEMail(),
             'orderId' => $order['id'],
+            'urlReturn' => 'http://bcash.f1host.com.br/bell',
             'buyer' => array(
                 'mail' => $buyer['email'],
                 'name' => $buyer['nome'],
@@ -90,14 +91,13 @@ class App_Models_Order extends App_Models_BCashAbstract {
     public function verifyStatusCode($transaction,$status,$statusCode,$originalValue,$shopValue,$orderId) {
 
         $params = array(
-            'transacao'=> $transactionId,
+            'transacao'=> $transaction,
             'status' => $status,
             'cod_status' => $statusCode,
             'valor_original' => $originalValue,
             'valor_loja' => $shopValue,
-            'token' => '',
+            'token' => $this->getToken(),
         );
-        debug($params);
 
         $url = "https://www.bcash.com.br/checkout/verify/";
 
@@ -109,10 +109,6 @@ class App_Models_Order extends App_Models_BCashAbstract {
         curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec ($ch);
 
-        debug($response);
-
-        if (trim($resonse)=="VERIFICADO") {
-        }
-
+        return trim($response)=="VERIFICADO";
     }
 }

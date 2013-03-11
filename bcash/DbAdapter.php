@@ -7,7 +7,7 @@ class App_DbAdapter {
     public static function getAdapter() {
         if (self::$_adapter == null) {
             // @todo remover informações estáticas
-            self::$_adapter = new Mysql_Adapter('192.168.0.9','dba','dba','bcash_service');
+            self::$_adapter = new Mysql_Adapter('localhost','bcash','bc458jKOuA34','bcash');
         }
         return self::$_adapter;
     }

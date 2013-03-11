@@ -35,7 +35,7 @@ class DbTable_Abstract {
     }
 
     private function _findBy($column,$value) {
-        return $this->_fetchRow(array('where' => array($column => $value)));
+        return $this->fetchRow(array('where' => array($column => $value)));
     }
 
     public function __call($method,$args) {

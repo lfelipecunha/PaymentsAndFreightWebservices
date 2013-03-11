@@ -78,9 +78,7 @@ abstract class App_Models_BCashAbstract {
         $response = json_decode($response,true);
         if ($httpCode != 200) {
             App_Log::addLog('error','HttpCode:'.$httpCode.' Error: '.$response['list'][0]['code'].' Message: '.urldecode($response['list'][0]['description']).' Params: '.$data);
-            return false;
-        } else {
-            return $response;
         }
+        return array('response' => $response,'code' => $httpCode);
     }
 }

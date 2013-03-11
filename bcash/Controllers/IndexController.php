@@ -16,13 +16,10 @@ class App_Controllers_IndexController extends Controller {
                 $response = array('code' => $id,'message' => 'Em processo de pagamento');
             }
         }
-
-        header('Content-Type: application/json');
-        echo json_encode($response);
+        $this->_sendJsonAndExit($response);
     }
 
     public function installmentAction() {
-
         if (!$this->_requestHandler->isPost()) {
             $response = array('O acesso a este serviço é somente por POST');
         } else {
@@ -37,8 +34,10 @@ class App_Controllers_IndexController extends Controller {
 
             }
         }
+        $this->_sendJsonAndExit($response);
+    }
 
-        header('Content-Type: application/json');
-        echo json_encode($response);
+    public function testeAction() {
+        App_Log::addLog('debug',var_export($this->_requestHandler->get('post'),true));
     }
 }
