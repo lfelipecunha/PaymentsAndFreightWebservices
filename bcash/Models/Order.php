@@ -50,7 +50,7 @@ class App_Models_Order extends App_Models_BCashAbstract {
                 'code' => $product['codigo'],
                 'description' => $product['nome'],
                 'amount' => $product['quantidade'],
-                'value' => $product['valor'],
+                'value' => number_format($product['valor'],2,'.',''),
             );
         }
         $result = $this->_doRequest('createTransaction',$data);

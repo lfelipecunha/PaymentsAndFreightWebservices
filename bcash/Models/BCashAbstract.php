@@ -61,10 +61,20 @@ abstract class App_Models_BCashAbstract {
 
     abstract protected function _getHeader($url);
 
+    private function _ISO2UTF($data) {
+        if (!is_array($data)) {
+            return utf8_encode($data);
+        }
+        foreach ($data as $key => &$value) {
+            $value = $this->_ISO2UTF($value);
+        }
+        return $data;
+    }
+
 
     protected function _doRequest($method,$data) {
         $url = 'https://api.bcash.com.br/service/'.$method.'/json';
-        $data = json_encode($data);
+        $data = json_encode($this->_ISO2UTF($data));
         $params = array('data' => $data,'encode' => $this->getEncode());
         $curl = curl_init();
         curl_setopt($curl,CURLOPT_URL,$url);
