@@ -18,13 +18,17 @@ class App_Services_Order extends App_Services_Abstract{
             if (in_array($result['code'],array(405,415,500,503))) {
                 $status = false;
                 break;
-            } elseif ($result['response'] != 200) {
+            } elseif ($result['code'] != 200) {
                 $values['status'] = 'CANCELADO';
                 $values['notificada'] = 0;
                 $valores = $table->removeCardValues($order['valores']);
                 $values['valores'] = serialize($valores);
                 $table->update($values,array('id' => $order['id']));
                 continue;
+            } else {
+                $valores = $table->removeCardValues($order['valores']);
+                $values['valores'] = serialize($valores);
+                $table->update($values,array('id' => $order['id']));
             }
             $table->addResultRegistry($result,$order['id']);
             $table->alterStatus('EM ANDAMENTO',$order['id']);
