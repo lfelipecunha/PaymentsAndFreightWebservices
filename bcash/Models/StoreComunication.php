@@ -25,7 +25,9 @@ class App_Models_StoreComunication {
         $curl = curl_init();
         curl_setopt($curl,CURLOPT_URL,$url);
         curl_setopt($curl,CURLOPT_POST,true);
-        curl_setopt($curl,CURLOPT_POSTFIELDS,http_build_query($params));
+        $params = http_build_query($params);
+        App_Log::addLog('debug',$params);
+        curl_setopt($curl,CURLOPT_POSTFIELDS,$params);
         curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
         $response = curl_exec($curl);
         $httpCode = curl_getinfo($curl,CURLINFO_HTTP_CODE);
