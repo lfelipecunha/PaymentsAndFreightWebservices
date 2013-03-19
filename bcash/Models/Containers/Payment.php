@@ -17,6 +17,7 @@ class App_Models_Containers_Payment extends Validation_Container {
             'Amex' => 37,
             'Diners' => 55,
             'Elo' => 63,
+            'Hipercard' => 56,
         );
         $code->addValidator(new Validation_Validator_In(array('values' => $cards)));
         $this->addElement($code);
