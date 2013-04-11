@@ -962,26 +962,22 @@ class Application_Model_Supreme implements Application_Model_Frete
 
 
 	private function _isFreteGratis($produtos,$valor_produtos,$cep) {
-        if ($valor_produtos < 80000) {
-            return false;
-        }
-/*		if (($this->_isRegiaoSul($cep_destino) || $this->_isRegiaoSudeste($cep_destino)) && $valor_produtos > 50000) {
-			return true;
-		}*/
-        $states = array('DF', 'ES', 'GO', 'PR', 'RJ', 'RS', 'SC', 'SP', 'MG');
-        $table = new Application_Model_DbTable_Estados();
-        $select = $table->select()->where('sigla IN(?)',$states);
-        $states = $table->fetchAll($select);
-		foreach ($produtos as $produto) {
-			//if ($produto['departamento'] == 22 || $produto['departamento'] == 25 || $produto['categoria'] == 53 || $produto['categoria'] == 29 || $produto['categoria'] == 40) {
-                foreach ($states as $state) {
-                    if ($cep >= $state['cep_inicio'] && $cep <= $state['cep_fim']) {
-                        return true;
-                    } else if (!empty($state['cep_inicio2']) && !empty($state['cep_fim2']) && $cep >= $state['cep_inicio2'] && $cep <= $state['cep_fim2']) {
-                        return true;
-                    }
-                }
-			//}
+		if ( $valor_produtos < 800 && $valor_produtos >= 200 ) {
+			$states = array('RS','SC','PR','SP');
+		} else if ( $valor_produtos >= 800 ) {
+			$states = array('DF', 'ES', 'GO', 'PR', 'RJ', 'RS', 'SC', 'SP', 'MG');
+		} else {
+			return false;
+		}
+		$table = new Application_Model_DbTable_Estados();
+		$select = $table->select()->where('sigla IN(?)',$states);
+		$states = $table->fetchAll($select);
+		foreach ($states as $state) {
+			if ( $cep >= $state['cep_inicio'] && $cep <= $state['cep_fim'] ) {
+				return true;
+			} else if ( !empty($state['cep_inicio2']) && !empty($state['cep_fim2']) && $cep >= $state['cep_inicio2'] && $cep <= $state['cep_fim2'] ) {
+				return true;
+			}
 		}
 		return false;
 	}
