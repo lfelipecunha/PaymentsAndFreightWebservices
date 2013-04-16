@@ -962,7 +962,7 @@ class Application_Model_Supreme implements Application_Model_Frete
 
 
 	private function _isFreteGratis($produtos,$valor_produtos,$cep) {
-		if ( $valor_produtos < 800 && $valor_produtos >= 200 ) {
+		if ( $valor_produtos < 800 && $valor_produtos >= 300 ) {
 			$states = array('RS','SC','PR','SP');
 		} else if ( $valor_produtos >= 800 ) {
 			$states = array('DF', 'ES', 'GO', 'PR', 'RJ', 'RS', 'SC', 'SP', 'MG');
