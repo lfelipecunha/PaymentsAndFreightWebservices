@@ -1000,7 +1000,7 @@ class Application_Model_Supreme implements Application_Model_Frete
 				}
 			}
 		}
-		if ($this->_isFreteGratis($this->_params['produtos'],$this->_params['valor_produtos'],$cep_destino)) {
+		if ($this->_isFreteGratis($this->_params['produtos'],$this->_params['valor_produtos']/100,$cep_destino)) {
 			$result['valor'] = 0;
 		}
 		return $result;
