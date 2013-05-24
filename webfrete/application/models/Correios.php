@@ -143,8 +143,15 @@ class Application_Model_Correios implements Application_Model_Frete
 				if ($valores->Erro == 0) {// se não houve erro
 					// realiza castings pois os valores são objetos XML
 
+					$valor = (int)(str_replace(',','',(string)$valores->Valor));
+
+					// valor zerado deve ir para a contingência
+					if ($valor == 0) {
+						throw new SopaFault();
+					}
+
 					// incrementa o valor deste frete no valor total do frete
-					$result['valor'] += (int)(str_replace(',','',(string)$valores->Valor));
+					$result['valor'] +=  $valor;
 					// pega o prazo de entrega
 					$prazo = (int)$valores->PrazoEntrega;
 					// seta sempre o maior prazo de entrega no prazo de entrega
@@ -156,7 +163,7 @@ class Application_Model_Correios implements Application_Model_Frete
 					$result['erro'] = 0;
 				} else {
 					// Condição para verificar se o erro do webservice dos correios foi um erro interno, em caso
-					// em caso positivo lança um SopaFault para obter os dados da contingência;;<<<<
+					// em caso positivo lança um SopaFault para obter os dados da contingência
 					if ($valores->Erro == '99') {
 						throw new SoapFault();
 					}
