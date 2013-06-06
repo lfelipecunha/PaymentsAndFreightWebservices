@@ -20,7 +20,7 @@ class App_Models_Containers_Client extends Validation_Container {
         $phone = new Validation_Element('telefone');
         $phone
             ->addValidator(new Validation_Validator_Numeric())
-            ->addValidator(new Validation_Validator_Length(array('maxLength' => 10,'minLength' => 10)));
+            ->addValidator(new Validation_Validator_Length(array('maxLength' => 11,'minLength' => 10)));
         $this->addElement($phone);
 
         $gender = new Validation_Element('genero');
